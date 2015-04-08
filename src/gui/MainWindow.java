@@ -96,9 +96,17 @@ public class MainWindow {
 				startSupervisedWindow();
 			}
 		});
+		
+		btnStartAnalysis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				startSupervisedWindow();
+			}
+		});
 	}
 	
 	private void startSupervisedWindow() {
+		
 		if(!textTheme.getText().equals("")) {
 			SupervisedLearningWindow learningWindow = new SupervisedLearningWindow();
 			learningWindow.windowLearning.setVisible(true);
