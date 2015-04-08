@@ -3,16 +3,14 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.JPanel;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JSplitPane;
 
 public class MainWindow {
 
-	private JFrame frame;
+	private JFrame frmXdffd;
 
 	/**
 	 * Launch the application.
@@ -22,7 +20,7 @@ public class MainWindow {
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
+					window.frmXdffd.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,9 +39,22 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmXdffd = new JFrame();
+		frmXdffd.setTitle("Supervised learning");
+		frmXdffd.setBounds(100, 100, 474, 290);
+		frmXdffd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmXdffd.getContentPane().setLayout(null);
+		
+		JButton btnNewButton = new JButton("New Supervised Learning");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(0, 183, 212, 39);
+		frmXdffd.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Resume Supervised Learning");
+		btnNewButton_1.setBounds(0, 206, 212, 45);
+		frmXdffd.getContentPane().add(btnNewButton_1);
 	}
 }
