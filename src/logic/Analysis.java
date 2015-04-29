@@ -11,24 +11,28 @@ import java.io.IOException;
 
 public class Analysis {
 
+	public static void main(String[] args) {
+		new Analysis();
+	}
+	
 	public Analysis() {
-		startWeka();
+		 String x = "test.arff";
+		startWeka(x);
 		
 	}
 
-	private void startWeka() {
+	private void startWeka(String file) {
 		
-		ArffLoader loader = new ArffLoader();
-	    String x = "test.arff";
-	    
 		try {
-			loader.setFile(new File(x));
+			ArffLoader loader = new ArffLoader();
+			loader.setFile(new File(file));
 			Instances structure = loader.getStructure();
 		    structure.setClassIndex(structure.numAttributes() - 1);
 
 		    // train NaiveBayes
 		    NaiveBayesUpdateable nb = new NaiveBayesUpdateable();
 		    nb.buildClassifier(structure);
+		    
 		    Instance current;
 		    while ((current = loader.getNextInstance(structure)) != null)
 		      nb.updateClassifier(current);
@@ -42,8 +46,5 @@ public class Analysis {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	    
-		
 	}
-
 }

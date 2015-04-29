@@ -10,11 +10,17 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
+import logic.Training;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SupervisedLearningWindow {
 
 	public JFrame windowLearning;
+	private Training training_phrases;
 
 	/**
 	 * Launch the application.
@@ -36,6 +42,8 @@ public class SupervisedLearningWindow {
 	 * Create the application.
 	 */
 	public SupervisedLearningWindow() {
+
+		training_phrases = new Training();
 		initialize();
 	}
 
@@ -55,6 +63,7 @@ public class SupervisedLearningWindow {
 		phrasesArea.setBounds(12, 80, 412, 60);
 		phrasesArea.setBorder(BorderFactory.createEtchedBorder());
 		windowLearning.getContentPane().add(phrasesArea);
+		phrasesArea.setText(training_phrases.getNextPhrase());
 		
 		JButton btnPrevious = new JButton("Previous");
 		btnPrevious.setBounds(12, 150, 117, 25);
@@ -83,9 +92,17 @@ public class SupervisedLearningWindow {
 		windowLearning.getContentPane().add(rdbtnNegative);
 		rdbtnsPolarity.add(rdbtnNegative);
 		
-		JLabel labelTotal = new JLabel("15/30");
+		JLabel labelTotal = new JLabel("0");
 		labelTotal.setFont(new Font("Dialog", Font.BOLD, 16));
 		labelTotal.setBounds(195, 12, 64, 25);
 		windowLearning.getContentPane().add(labelTotal);
+		
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				phrasesArea.setText(training_phrases.getNextPhrase());
+				int number = Integer.parseInt(labelTotal.getText()) + 1;
+				labelTotal.setText(Integer.toString(number));
+			}
+		});
 	}
 }
