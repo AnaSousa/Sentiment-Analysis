@@ -2,20 +2,20 @@ package gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 
-import java.awt.Font;
-
 import logic.Training;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class SupervisedLearningWindow {
 
@@ -58,12 +58,16 @@ public class SupervisedLearningWindow {
 		windowLearning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLearning.getContentPane().setLayout(null);
 		
-		JTextArea phrasesArea = new JTextArea();
+		JTextArea phrasesArea = new JTextArea(20, 50);
 		phrasesArea.setEditable(false);
 		phrasesArea.setBounds(12, 80, 412, 60);
 		phrasesArea.setBorder(BorderFactory.createEtchedBorder());
 		windowLearning.getContentPane().add(phrasesArea);
 		phrasesArea.setText(training_phrases.getNextPhrase());
+		phrasesArea.setRows(25);
+		phrasesArea.setColumns(25);
+		phrasesArea.setWrapStyleWord(true);
+		phrasesArea.setLineWrap(true);
 		
 		JButton btnPrevious = new JButton("Previous");
 		btnPrevious.setBounds(12, 150, 117, 25);
@@ -97,11 +101,21 @@ public class SupervisedLearningWindow {
 		labelTotal.setBounds(195, 12, 64, 25);
 		windowLearning.getContentPane().add(labelTotal);
 		
+		windowLearning.getContentPane().setVisible(true);
+		
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				phrasesArea.setText(training_phrases.getNextPhrase());
-				int number = Integer.parseInt(labelTotal.getText()) + 1;
-				labelTotal.setText(Integer.toString(number));
+				
+				if(!rdbtnPositive.isSelected() && !rdbtnNeutral.isSelected() && !rdbtnNegative.isSelected()) {
+					JOptionPane.showMessageDialog(windowLearning,
+							"You must classify the phrase.",
+						    "Empty theme",
+						    JOptionPane.ERROR_MESSAGE);
+				} else {
+					phrasesArea.setText(training_phrases.getNextPhrase());
+					int number = Integer.parseInt(labelTotal.getText()) + 1;
+					labelTotal.setText(Integer.toString(number));
+				}
 			}
 		});
 	}
