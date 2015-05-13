@@ -105,16 +105,18 @@ public class SupervisedLearningWindow {
 		
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				String phrase;
 				if(!rdbtnPositive.isSelected() && !rdbtnNeutral.isSelected() && !rdbtnNegative.isSelected()) {
 					JOptionPane.showMessageDialog(windowLearning,
 							"You must classify the phrase.",
-						    "Empty theme",
+						    "",
 						    JOptionPane.ERROR_MESSAGE);
-				} else {
-					phrasesArea.setText(training_phrases.getNextPhrase());
+				} else if((phrase = training_phrases.getNextPhrase()) != null) {
+					phrasesArea.setText(phrase);
 					int number = Integer.parseInt(labelTotal.getText()) + 1;
 					labelTotal.setText(Integer.toString(number));
+					
+					rdbtnsPolarity.clearSelection();
 				}
 			}
 		});
