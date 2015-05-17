@@ -25,6 +25,9 @@ public class Training {
 			
 			String line;
 		    if ((line = br.readLine()) != null) {
+		    	
+		    	//TODO: augusto
+		    	
 		    	return line;
 		    }
 	
