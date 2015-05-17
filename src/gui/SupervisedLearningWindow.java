@@ -58,7 +58,7 @@ public class SupervisedLearningWindow {
 		windowLearning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLearning.getContentPane().setLayout(null);
 		
-		JTextArea phrasesArea = new JTextArea();
+		final JTextArea phrasesArea = new JTextArea();
 		phrasesArea.setEditable(false);
 		phrasesArea.setBounds(12, 80, 412, 60);
 		phrasesArea.setBorder(BorderFactory.createEtchedBorder());
@@ -92,7 +92,7 @@ public class SupervisedLearningWindow {
 		windowLearning.getContentPane().add(rdbtnNegative);
 		rdbtnsPolarity.add(rdbtnNegative);
 		
-		JLabel labelTotal = new JLabel("0");
+		final JLabel labelTotal = new JLabel("0");
 		labelTotal.setFont(new Font("Dialog", Font.BOLD, 16));
 		labelTotal.setBounds(195, 12, 64, 25);
 		windowLearning.getContentPane().add(labelTotal);

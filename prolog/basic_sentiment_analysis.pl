@@ -35,7 +35,7 @@ sentence_score([[Word, Tag]|Tail], PrevToken, TotalScore) :-
 tag_sentence([Word |Reststring], Reststring, [Word, Category]) :-
 	dict(Word,Category).
 tag_sentence([Word |Reststring], Reststring, [Word, nothing]) :-
-	not(dict(Word,_)).
+	\+(dict(Word,_)).
 tag_sentence([],String, String).
 tag_sentence(String, Reststring, [Subtree|Subtrees]) :-
 	tag_sentence(String, String1, Subtree),
@@ -80,4 +80,4 @@ server_valid(ClientRequest,Stream) :-
                 write('Sent: '), write(ServerReply), nl, 
                 flush_output(Stream),server_loop(Stream).
 
-server_input(Str,Value):- sentiment(Str,Value),!.
+server_input(evaluate_str(Str),Value):- sentiment(Str,Value),!.
