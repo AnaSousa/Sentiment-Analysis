@@ -1,10 +1,1 @@
-The Google Books Ngram Viewer is optimized for quick inquiries into the usage of small sets of phrases. If you're interested in performing a large scale analysis on the underlying data, you might prefer to download a portion of the corpora yourself. Or all of it, if you have the bandwidth and space. We're happy to oblige.
-These datasets were generated in July 2012 (Version 2) and July 2009 (Version 1); we will update these datasets as our book scanning continues, and the updated versions will have distinct and persistent version identifiers (20120701 and 20090715 for the current sets).
-Each of the numbered links below will directly download a fragment of the corpus. In Version 2 the ngrams are grouped alphabetically (languages with non-Latin scripts were transliterated); in Version 1 the ngrams are partitioned into files of equal size. In addition, for each corpus we provide a file named total_counts, which records the total number of 1-grams contained in the books that make up the corpus. This file is useful for computing the relative frequencies of ngrams.
-A summary of how the corpora were constructed can be found here. We explain it in greater depth here (Version 2) and here (Version 1). In both, we point out that we've included only ngrams that appear over 40 times across the corpus. That's why the sum of the 1-gram occurrences in any given corpus is smaller than the number given in the total_counts file.
-File format: Each of the files below is compressed tab-separated data. In Version 2 each line has the following format:
-ngram TAB year TAB match_count TAB volume_count NEWLINE
-As an example, here are the 3,000,000th and 3,000,001st lines from the a file of the English 1-grams (googlebooks-eng-all-1gram-20120701-a.gz):
-circumvallate   1978   335    91
-circumvallate   1979   261    91
-The first line tells us that in 1978, the word "circumvallate" (which means "surround with a rampart or other fortificatio
+Sunday afternoon binge watching #GreysAnatomy episodes is the best. Especially with both Dr. Shepherd and Dr. Sloan alive.
