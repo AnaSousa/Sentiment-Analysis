@@ -1,12 +1,11 @@
 package logic;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
+import java.lang.Runtime;
 
 public class PrologSocket {
 
@@ -14,22 +13,21 @@ public class PrologSocket {
 	private Socket s;
 	private PrintWriter out;
 	private BufferedReader in;
+	private Process prolog_server;
 	
 	public static void main(String[] args) {
 		
 		try {
 			PrologSocket.getInstance().connect();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int res;
 		try {
-			res = PrologSocket.getInstance().evaluateSentence("I am Sad");
+			res = PrologSocket.getInstance().evaluateSentence("I am happy");
 			System.out.println(res);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -48,8 +46,15 @@ public class PrologSocket {
 	public void connect()
 	{
 		try {
+			String os = System.getProperty("os.name");
+			String cmd = "./prolog/server";
+			if(os.toLowerCase().contains("windows"))
+				cmd = "./prolog/server.exe";
+			prolog_server = Runtime.getRuntime().exec(cmd);
+			Thread.sleep(1000);
 			s.connect(new InetSocketAddress("127.0.0.1", 2000), 1000);
-			s.setSoTimeout(1000);
+			s.setSoTimeout(5000);
+			System.out.println("Connection Established");
 			out = new PrintWriter(s.getOutputStream(), true);
 	        in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		} catch (Exception e) {
@@ -68,18 +73,33 @@ public class PrologSocket {
 		return evaluationSub(str);
 	}
 
-	private int evaluationSub(String str) throws IOException {
+	private int evaluationSub(String str) throws Exception {
 		out.print("evaluate_str(['");
-		String words[] = str.split("( )|(\\.)|(')");
+		String words[] = str.split("(?!\\w).");
 		for(int i = 0; i < words.length -1 ; i++)
 		{
-			out.print(words[i].toLowerCase());
-			out.print("','");
+			if(words[i].length() > 0)
+			{
+				out.print(words[i].toLowerCase());
+				//System.out.println(words[i].toLowerCase());
+				out.print("','");	
+			}
 		}
-		out.print(words[words.length-1].toLowerCase());
+		if(words[words.length-1].length() > 0)
+			out.print(words[words.length-1].toLowerCase());
         out.println("']).");
-        String num[] = in.readLine().split("\\.");
-        return Integer.parseInt(num[0]);
+        String num[];
+		try {
+			num = in.readLine().split("\\.");
+	        return Integer.parseInt(num[0]);
+		} catch (Exception e) {
+			System.err.println("error while evaluating");
+			prolog_server.destroyForcibly();
+			Thread.sleep(2000);
+			s = new Socket();
+			connect();
+			throw new Exception("error while evaluating");
+		}
 	}
 
 }
