@@ -51,7 +51,7 @@ sentiment(String,Value) :-
 
 %%server
 
-%%%user:runtime_entry(start) :- server.
+user:runtime_entry(start) :- server.
 
 :- use_module(library(sockets)).
 
