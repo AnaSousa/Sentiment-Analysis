@@ -3,7 +3,7 @@ java -cp ./weka.jar weka.core.converters.TextDirectoryLoader -dir txt_sentoken >
 # tokenize
 java -cp ./weka.jar weka.filters.unsupervised.attribute.StringToWordVector -R first -W 1000 -prune-rate -1.0 -T -I -N 1 -S -stemmer weka.core.stemmers.SnowballStemmer -M 10 -stopwords "/home/tiago/lab/bolsa/index creator/stopwords.txt" -tokenizer weka.core.tokenizers.AlphabeticTokenizer -i text_example.arff -o nabao.arff
 #reorder
-java -cp ./weka.jar weka.filters.unsupervised.attribute.Reorder -R last-first -i nabao.arff -o nabao2.arff
+java -cp ./weka.jar weka.filters.unsupervised.attribute.Reorder -R 2-last,first -i nabao.arff -o nabao2.arff
 #choose attributes
 java -cp ./weka.jar weka.filters.supervised.attribute.AttributeSelection -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.BestFirst -D 1 -N 5" -i nabao2.arff -o nabao3.arff
 
