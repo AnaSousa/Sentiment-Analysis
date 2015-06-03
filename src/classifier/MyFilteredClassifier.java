@@ -15,8 +15,9 @@ package classifier;
  */
  
 import weka.core.*;
-import weka.core.FastVector;
+import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.meta.FilteredClassifier;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
@@ -94,11 +95,11 @@ import java.io.*;
 		Attribute attribute2 = new Attribute("text",(FastVector) null);
 		// Create list of instances with one element
 		FastVector fvWekaAttributes = new FastVector(2);
-		fvWekaAttributes.addElement(attribute2);
 		fvWekaAttributes.addElement(attribute1);
+		fvWekaAttributes.addElement(attribute2);
 		instances = new Instances("Test relation", fvWekaAttributes, 1);           
 		// Set class index
-		instances.setClassIndex(1);
+		instances.setClassIndex(0);
 		// Create and add the instance
 		Instance instance = new Instance(2);
 		instance.setValue(attribute2, text);

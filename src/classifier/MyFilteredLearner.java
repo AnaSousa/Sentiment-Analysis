@@ -15,7 +15,7 @@ package classifier;
  */
 
 import weka.core.Instances;
-import weka.filters.Filter;
+import weka.filters.*;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.classifiers.Evaluation;
 import java.util.Random;
@@ -73,6 +73,7 @@ public class MyFilteredLearner {
 			trainData.setClassIndex(1);
 			filter = new StringToWordVector();
 			//filter.setAttributeIndices("last");
+			filter.setUseStoplist(true);
 			classifier = new FilteredClassifier();
 			classifier.setFilter(filter);
 			classifier.setClassifier(new NaiveBayes());
@@ -94,7 +95,9 @@ public class MyFilteredLearner {
 		try {
 			trainData.setClassIndex(1);
 			filter = new StringToWordVector();
+			
 			//filter.setAttributeIndices("last");
+			filter.setUseStoplist(true);
 			classifier = new FilteredClassifier();
 			classifier.setFilter(filter);
 			classifier.setClassifier(new NaiveBayes());
