@@ -1,0 +1,6 @@
+@relation ola
+
+@attribute text string
+@attribute @@class@@ {neg,pos}
+
+@data

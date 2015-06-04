@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Converter {
-	final Path PATH = FileSystems.getDefault().getPath("statuses.txt");
+	final Path PATH = FileSystems.getDefault().getPath("status.txt");
 	String topic;
 
 	public Converter(String topic) {
