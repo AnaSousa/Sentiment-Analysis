@@ -1,8 +1,12 @@
 package logic;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Vector;
 
 public class Training {
@@ -26,7 +30,9 @@ public class Training {
 		}
 	}
 	
-	BufferedReader br;
+	private BufferedReader br;
+	private BufferedWriter bw;
+	private Vector<EvaluatedPhrase> phrases;
 	
 	public Training() {
 		
@@ -41,7 +47,7 @@ public class Training {
 	
 	public Vector<EvaluatedPhrase> getPhrases() {
 		
-		Vector<EvaluatedPhrase> phrases = new Vector<EvaluatedPhrase>();
+		phrases = new Vector<EvaluatedPhrase>();
 		
 		try {
 			String line;
@@ -62,6 +68,33 @@ public class Training {
 		}
 		
 		return phrases;
+	}
+
+	public void saveToArffFile() {
+		
+		try {
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("status.arff")));
+			
+			bw.write("@relation\n"); //TODO:
+			bw.write("@attribute\n"); //TODO:
+			
+			bw.write("@data\n");
+			
+			for(int i = 0; i < phrases.size(); i++)
+				bw.write(phrases.get(i).str + "\n");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+		} finally {
+			   try {
+				   bw.close();
+				   }
+			   catch (Exception ex) {}
+		}
 	}
 
 }

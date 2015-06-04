@@ -1,4 +1,4 @@
-@relation ola
+@relation jenner
 
 @attribute text string
 @attribute @@class@@ {neg,pos}

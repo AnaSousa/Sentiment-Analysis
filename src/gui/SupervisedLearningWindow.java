@@ -24,6 +24,7 @@ public class SupervisedLearningWindow {
 	public JFrame windowLearning;
 	private Vector<EvaluatedPhrase> training_phrases = new Vector<EvaluatedPhrase>();
 	private int count = 0;
+	private Training training;
 
 	/**
 	 * Launch the application.
@@ -46,7 +47,7 @@ public class SupervisedLearningWindow {
 	 */
 	public SupervisedLearningWindow() {
 
-		Training training = new Training();
+		training = new Training();
 		training_phrases = training.getPhrases();
 		initialize();
 	}
@@ -108,12 +109,6 @@ public class SupervisedLearningWindow {
 		windowLearning.getContentPane().add(rdbtnNegative);
 		rdbtnsPolarity.add(rdbtnNegative);
 
-		final JLabel labelTotal = new JLabel("1 / " + Integer.toString(training_phrases.size()));
-		labelTotal.setFont(new Font("Dialog", Font.BOLD, 16));
-		labelTotal.setBounds(195, 12, 64, 25);
-		windowLearning.getContentPane().add(labelTotal);
-
-
 		if(ep.has_value)
 		{
 			if(ep.value == 0)
@@ -122,6 +117,20 @@ public class SupervisedLearningWindow {
 				rdbtnNegative.setSelected(true);
 			else rdbtnPositive.setSelected(true);
 		}
+		
+		final JLabel labelTotal = new JLabel("1 / " + Integer.toString(training_phrases.size()));
+		labelTotal.setFont(new Font("Dialog", Font.BOLD, 16));
+		labelTotal.setBounds(195, 12, 64, 25);
+		windowLearning.getContentPane().add(labelTotal);
+		
+		JButton btnFinish = new JButton("Finish");
+		btnFinish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				training.saveToArffFile();
+			}
+		});
+		btnFinish.setBounds(142, 151, 117, 25);
+		windowLearning.getContentPane().add(btnFinish);
 
 		windowLearning.getContentPane().setVisible(true);
 
