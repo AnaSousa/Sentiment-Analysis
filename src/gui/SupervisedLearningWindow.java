@@ -129,7 +129,7 @@ public class SupervisedLearningWindow {
 				training.saveToArffFile();
 			}
 		});
-		btnFinish.setBounds(142, 151, 117, 25);
+		btnFinish.setBounds(164, 150, 117, 25);
 		windowLearning.getContentPane().add(btnFinish);
 
 		windowLearning.getContentPane().setVisible(true);
