@@ -1,2 +1,14 @@
 /bin/
-/prolog/server
+*.lib
+prolog/server.exp
+prolog/main.sav
+*.exe
+prolog/main.sav
+*.pdb
+prolog/server.ilk
+*.sav
+prolog/main.sav
+*.sav
+prolog/main.sav
+*.sav
+*.sav
