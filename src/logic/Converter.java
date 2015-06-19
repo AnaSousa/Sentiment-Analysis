@@ -17,16 +17,16 @@ import settings.Constants;
 import settings.Settings;
 
 public class Converter {
-	final Path PATH = FileSystems.getDefault().getPath("status.txt");
+	final Path PATH = FileSystems.getDefault().getPath("statuses.txt");
 	String topic;
 
 	public Converter(String topic) {
 		this.topic = topic;
 	}
 
-	public void generateArff() {
+	public void generateArff(String savePath) {
 		try {
-			PrintWriter writer = new PrintWriter("statuses.arff", "UTF-8");
+			PrintWriter writer = new PrintWriter(savePath, "UTF-8");
 
 			writer.println("@relation " + topic + "\n");
 			writer.println("@attribute text string");
@@ -37,7 +37,7 @@ public class Converter {
 
 				String escapedLine = org.apache.commons.lang3.StringEscapeUtils.escapeJava(
 						removeUrl(line).replaceAll("\u2018", "").replaceAll("\u2019", "").replaceAll("'", "\\'")).replaceAll("'", " ");
-				if(escapedLine.split(" ").length > 4)
+				if(escapedLine.split(" ").length > 10)
 					writer.println("\'" + escapedLine + "\',?");
 			}
 			writer.flush();
@@ -47,7 +47,7 @@ public class Converter {
 		}
 	}
 
-	public static void classify() {
+	public static void classify(String modelPath, String arffPath) {
 		ResultWindow window = new ResultWindow();
 		window.frmResult.setVisible(true);
 
@@ -59,7 +59,9 @@ public class Converter {
 				Runtime r = Runtime.getRuntime();
 				Process proc;
 				try {
-					proc = r.exec(Settings.getProperty("classifier_command"));
+					String command = Settings.getProperty("classifier_command");
+					command = command.replace("{model}", modelPath).replace("{arff}", arffPath);
+					proc = r.exec(command);
 
 					BufferedReader stdInput = new BufferedReader(new 
 							InputStreamReader(proc.getInputStream()));
