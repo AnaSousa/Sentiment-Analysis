@@ -1,0 +1,91 @@
+@relation health
+
+@attribute text string
+@attribute @@class@@ {neg,pos}
+
+@data
+'RT @incarnatehealth:  Flower of Youth  exclusive facial care with collagen and elastin.  ',?
+'The Healing Power of Light ~  #Health #HealthCare via @mercola',?
+'&lt;em&gt;Eat Well to Be Well:&lt;/em&gt; Magnesiums magic works to minimize type 2 diabetes  #magnesium #diabetes #health',?
+'Raw cacao can be a great addition to a #vegetarian diet:  #health #nutrition',?
+'#DentalHygiene. Too many people are guilty of skipping needed visits to the dentist.#Dental #Dentistry #Health.',?
+'Learn stress release and detox strategies for more success! Listen:  #podcast #entrepreneur #success #health cmweal\u2026',?
+'More than 15 million people, including over 1m internally displaced person (IDPs), in dire need of #health services',?
+'RT @NSAEN: A Child with Special Needs   #lifestyle #health #kids #autism',?
+'@TIEDC2014 #Pot blocks damage from cigs&amp;booze2improve public #health. Pot is a #health shield. Watch and share:',?
+'RT @_inkster_: 7 Ways #Music Benefits Your #Heart, #Brain &amp; #Health',?
+'RT @Fit365_: I lost 16 lbs after just 21 days.. this simple 2 step cleanse really does wonders!\uD83D\uDC4C #health \u2026',?
+'sparhiala: Just finished week 4 day 3 of #10K #Trainer with zenlabsfitness! #everymomentcounts #run #running #health #fitness',?
+'80% of textiles, fabrics, clothes, linen, drapes, bed sheets, were made from hemp until the 1820s #hemp #health',?
+'What is zirilen? The answer is simple. It s ...  #HEALTH',?
+'Facts of Cardio Workouts on Fitness: Cardiovascular Zone  #health #fitness #cardio',?
+'RT @DailyHealthTips: Parabens are the most commonly used preservatives in cosmetic products -',?
+'Use these step-by-step instructions to grow your own produce for some #summer fun with your #kids:  #nutrition #health',?
+'RT @NamatQA: Research study has proven that having #dates to break our #fasts is a great benefit for our #nutrition and #health!',?
+'A lot of research say it, #champagne is good for your #health! (but drink moderatly)',?
+'Record  fake drugs  haul worth \u00A316m by UK agency BBC News -  @MediaTha #healthcare #health',?
+'\"This book [will] offend almost everyone who opens it...\" Your Personal Affordable Care Act  #health #books #aca',?
+'Watch this to learn how you can maximize your #brain #health!  @BrainCanada @MyBrainMatters @CAMHnews @AlzheimerOnt',?
+'RT @gary_lindberg: SAVING SAM. This book will change your mind about heart disease. And how we treat it.   #health #h\u2026',?
+'RT @ElaineAlways28: Acupuncture is the stimulation of specific acupuncture points along the skin of the body using thin needles. #Health #M\u2026',?
+'RT @HelenHsuPsyD: World #sicklecell day #bloodcentersofthepacific #DonateBlood ! I #giveblood since UCLA grateful blessings of #health http\u2026',?
+'RT @JournalNEO: Much of mainstream medical research is corporate-funded fraud...  #Health #Vaccines #Cancer \u2026',?
+'RT @PodcastBlast: Listen LIVE:  #BEST #INTERNET #SHOW #LOOKYOUNGER #HEALTH #TOXICEMOTIONS',?
+'5 Quotes that Prove How Awesome Dads Are   #health #shoes',?
+'RT @PanicCompanion: Claire Weekes Hope &amp; Help for Your Nerves only $6!  #health #healthy #books #read #reading #buy h\u2026',?
+'RT @PodcastBlast: LIVE NOW listen! :  #BEST #INTERNET #SHOW #LOOKYOUNGER #HEALTH #TOXICEMOTIONS',?
+'The Benefits of Yerba Mate  Don t wait, get your own yerba mate now  #shop #save #health',?
+'He who has health, has hope; and he who has hope, has everything. #hope #health #integrated',?
+'#Health #Program Weekend Housework Helps You Lose Weight Effectively  #BetterCallSaul #Fit',?
+'Safer medical devices and #alcohol abuse were discussed by EU ministers for #Health today. Full info:',?
+'Research study has proven that having #dates to break our #fasts is a great benefit for our #nutrition and #health!',?
+'#Health #Solution SlimPlate System Launches Affiliate Program For Entrepreneurs Who Want A\u2026  #RobertPattinson #Go',?
+'#Health #Solution 5 Ways To Stop Sugar Cravings And Start Losing Weight  #Packers #FatLoss',?
+'#Diet #Nutrition Simple Exercises To Lose Arm Fat In Just 20 Minutes Per Day  #EltonJohn #Health',?
+'#Health #Workout Three Reasons You Should Drink to Your Health  #FatLoss #News',?
+'RT @DailyHealthTips: Parabens are the most commonly used preservatives in cosmetic products -',?
+'#fitspo #fitblr The Main Reasons Why Diets Don t Work  #MariahCarey #Health',?
+'#Health #Weightloss Rapid Weight Loss. Yes Or No?  #JulianneMoore #Fit',?
+'#Workout #Health SlimPlate System Launches Affiliate Program For Entrepreneurs Who Want A Slice\u2026  #AvrilLavigne #Fit',?
+'Learn stress release and detox strategies for more success! Listen:  #podcast #entrepreneur #success #health',?
+'#Health #Solution 5 Ways To Stop Sugar Cravings And Start Losing Weight  #Cavaliers #FitBit',?
+'#Workout #Health Rapid Weight Loss. Yes Or No?  #KellyClarkson #Fit',?
+'#Health #Exercise 5 Simple Weight Loss Strategies - Why Be Fat When It s So Easy To Be Thin?  #Trend #Healthcare',?
+'#Workout #Health SlimPlate System Launches Affiliate Program For Entrepreneurs Who Want A\u2026  #AshleyTisdale #Plan',?
+'Arizona mom speaks out about public misperception of Ty #diabetestype2 #diabetesype1 #health #liver #kidneys #eyes',?
+'Its not just us\u2013every grownup thinks there is too much #prevention \u00AB They Said What? #medicine #health #wellness',?
+'#Workout #Health SlimPlate System Launches Affiliate Program For Entrepreneurs Who Want A Slice\u2026  #KateWinslet #DVD',?
+'#Workout #Health Three Reasons You Should Drink to Your Health  #GeorgeClooney #Fit',?
+'#Health #Weightloss The Basic Steps to Developing a Diet Exercise Regime  #Deals #UsedCars',?
+'#Health #Diet Three Reasons You Should Drink to Your Health  #VictoriaBeckham',?
+'#Fitblr #Diet Shed Off The Extra Pounds In As Little As A Month  #WeightLoss #Health',?
+'#FatLoss #Diet 6 Fruits and Vegetables Help You Lose Weight Effectively  #Thunder #Health',?
+'INFOGRAPHIC: What To Eat To Ward Off Cancer  #conscioushealthsolutions #health',?
+'How Exercise REALLY Impacts Menopause  #femsupport #fit #yoga #diet #health',?
+'Visit our website for more information on our company  #hearingprotection #hearing #ears #health #safety',?
+'@vitahealthcare Checkout some really Great Promotional Gift ideas for the #Health Industry:',?
+'RT @Fit365_: I lost 16 lbs after just 21 days.. this simple 2 step cleanse really does wonders!\uD83D\uDC4C #health \u2026',?
+'\"@WHO: #ClimateChange affects the basic requirements for #health: clean water &amp; air sufficient food',?
+'RT @EU_Health: Meeting of #EU Expert Group on Social Determinants &amp; #Health #Inequalities, 15-16 June 2015  \u2026',?
+'The correct spelling is  pH  which means Potential Hydrogen. #health',?
+'#Diet #Health #Healthcare #Weightloss - What happens to our ... -',?
+'5 Foods That Make You Dumber  @YahooHealth #avoid #foodchemicals #hydrogenatedoils #transfats #food #foodie #health',?
+'@OmronHealthEU Checkout some really Great Promotional Gift ideas for the #Health Industry:',?
+'Learn to jumpstart your weight loss goals and increase your energy! #weightloss #health',?
+'Here are some great foods to keep you feeling full for longer. #Health',?
+'Great stuff going on @gentoogroup  - leading innovation around #Health  &amp; #ukhousing , impressive! @steve_hoey',?
+'RT @V_Beckham1: #Health #Diet A Simple Way To Lose Weight And Keep It Off  #VictoriaBeckham',?
+'Racehorses at risk from misuse of cobalt, new study finds   #science #health',?
+'#Chipotle Tortillas Will Soon Be Preservative-Free and Full of #WholeGrains  #nutrition #health #fastfood',?
+'RT @4loveofcarrots: Sweeten up your Friday with our new strawberry chocolate avocado pudding! #gf #vegan #health\u2026',?
+'Check out my friends at .@_healthytrucker on .@CFFNATION  #fleet #trucking #health #fitness',?
+'@myhealthcare_UK Checkout some really Great Promotional Gift ideas for the #Health Industry:',?
+'Acupuncture is the stimulation of specific acupuncture points along the skin of the body using thin needles. #Health #Medicine',?
+'Acupuncture is the stimulation of specific acupuncture points along the skin of the body using thin needles. #Health #Medicine',?
+'Welcome to our new followers. Visit the My Faith and Fitness Blog to read about #Health #Faith &amp; #Fitness.',?
+'Empower Your Brain With Water -  -  #health #empower #brain',?
+'Laughter may cause a lift in spirit, better perspective on life and tighter abs. #health #inspiration #Etobicoke',?
+'Acupuncture is the stimulation of specific acupuncture points along the skin of the body using thin needles. #Health #Medicine',?
+'Scott Baio s wife diagnosed with brain tumor  #health #KHOU',?
+'#diet Short-term high-fructose diet may yield higher post-meal liver fat, de novo lipogenesis...  #health #fitness',?
+'#diet Beat Bloat, Lose Weight, And Feel All-Around Amazing By Making This Change: Five new bo...  #health #fitness',?

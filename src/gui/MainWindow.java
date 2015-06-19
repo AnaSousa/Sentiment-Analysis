@@ -138,11 +138,19 @@ public class MainWindow {
 
 		btnStartAnalysis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Classifying data...");
-				Converter.classify();
-				System.out.println("Classifying data ended");
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						System.out.println("Classifying data...");
+						Converter.classify();
+						System.out.println("Classifying data ended");
+					}
+				}).start();
+				
 			}
 		});
+		
 	}
 
 	private void startSupervisedWindow() {
