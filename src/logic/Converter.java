@@ -37,7 +37,7 @@ public class Converter {
 
 				String escapedLine = org.apache.commons.lang3.StringEscapeUtils.escapeJava(
 						removeUrl(line).replaceAll("\u2018", "").replaceAll("\u2019", "").replaceAll("'", "\\'")).replaceAll("'", " ");
-				if(escapedLine.split(" ").length > 10)
+				if(escapedLine.split(" ").length > 4)
 					writer.println("\'" + escapedLine + "\',?");
 			}
 			writer.flush();
