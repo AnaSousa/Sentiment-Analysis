@@ -13,7 +13,7 @@ public class Training {
 	
 	public class EvaluatedPhrase
 	{
-		public final int value;
+		public int value;
 		public final boolean has_value;
 		public final String str;
 		
