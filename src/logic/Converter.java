@@ -158,6 +158,10 @@ public class Converter {
 		}.run();
 	}
 
+	public static void generateModel(String modelPath, String arffPath, IMainPanel panelResult) {
+		
+	}
+
 
 	//Input the String that contains the url
 

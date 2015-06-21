@@ -156,9 +156,9 @@ public class MainWindow {
 		btnNewLearning.setBounds(91, 67, 171, 25);
 		panel.add(btnNewLearning);
 
-		JButton btnResumeLearning = new JButton("Export Model");
-		btnResumeLearning.setBounds(274, 67, 171, 25);
-		panel.add(btnResumeLearning);
+		JButton btnExport = new JButton("Export Model");
+		btnExport.setBounds(274, 67, 171, 25);
+		panel.add(btnExport);
 
 		textField = new JTextField();
 		textField.setColumns(10);
@@ -364,10 +364,10 @@ public class MainWindow {
 			}
 		});
 
-		btnResumeLearning.addActionListener(new ActionListener() {
+		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				startSupervisedWindow();
+				
 			}
 		});
 
