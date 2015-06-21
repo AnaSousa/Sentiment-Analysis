@@ -1,5 +1,7 @@
 package logic;
 
+import gui.MainWindow;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -39,6 +41,7 @@ public class Training {
 	public Training() {
 
 		try {
+			//br = new BufferedReader(new FileReader(MainWindow.textArffPath.getText()));
 			br = new BufferedReader(new FileReader("sun_5.arff"));
 			PrologSocket.getInstance().connect();
 
@@ -65,7 +68,7 @@ public class Training {
 				}
 				else {
 
-					System.out.println(line);
+					//System.out.println(line);
 
 					String[] parts = line.split("',");
 					String phrase = parts[0];
@@ -76,7 +79,7 @@ public class Training {
 					}
 
 					System.out.println(phrase);
-					System.out.println(evaluation);
+					//System.out.println(evaluation);
 
 					if(evaluation.equals("?")) {
 						try {

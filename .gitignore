@@ -13,3 +13,5 @@ prolog/main.sav
 *.sav
 *.sav
 slb_4.arff
+
+prolog/server
