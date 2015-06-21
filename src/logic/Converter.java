@@ -1,6 +1,6 @@
 package logic;
 
-import gui.ResultWindow;
+import gui.IMainPanel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,9 +47,10 @@ public class Converter {
 		}
 	}
 
-	public static void classify(String modelPath, String arffPath) {
-		ResultWindow window = new ResultWindow();
-		window.frmResult.setVisible(true);
+	public static void classify(String modelPath, String arffPath, IMainPanel panelResult) {
+		//ResultWindow window = new ResultWindow();
+		//window.frmResult.setVisible(true);
+		panelResult.setLoading();
 
 		new Runnable() {
 
@@ -142,7 +143,7 @@ public class Converter {
 
 					percent = percent / (positives.size() + negatives.size() + neutrals.size());
 
-					window.setResult(max, percent);
+					panelResult.setResult(max, percent);
 					// read any errors from the attempted command
 					System.out.println("Here is the standard error of the command (if any):\n");
 					while ((s = stdError.readLine()) != null) {

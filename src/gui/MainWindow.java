@@ -1,13 +1,10 @@
 package gui;
 
-import gui.ResultWindow.MainPanel;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Converter;
 import logic.Python;
+import settings.Constants;
 
 public class MainWindow {
 
@@ -41,9 +39,11 @@ public class MainWindow {
 	private JTextField textNoResults;
 	private JTextField textArffPath;
 	private JTextField textField;
+	private JLabel resultLabel;
+	private MainPanel panelResult;
 
 
-	class MainPanel extends JPanel {
+	class MainPanel extends JPanel implements IMainPanel {
 		private static final long serialVersionUID = 1L;
 
 		private static final String PATH_LOADING = "resources/loader.gif";
@@ -63,7 +63,7 @@ public class MainWindow {
 			positive = Toolkit.getDefaultToolkit().createImage(PATH_POSITIVE);
 			neutral = Toolkit.getDefaultToolkit().createImage(PATH_NEUTRAL);
 			negative = Toolkit.getDefaultToolkit().createImage(PATH_NEGATIVE);
-			showImage = neutral;
+			showImage = null;
 			repaint();
 		}
 
@@ -71,7 +71,43 @@ public class MainWindow {
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			if(showImage != null)
-				g.drawImage(showImage, 100, 10,100,100,this);
+				//g.drawImage(showImage, 110, 10,50,50,this);
+				g.drawImage(showImage, 90, 0,85,85,this);
+		}
+		
+		public void setResult(String result, float percentage) {
+			resultLabel.setVisible(true);
+			String text = "";
+			switch(result) {
+			case Constants.NEGATIVE: 
+				panelResult.showImage = panelResult.negative;
+				text = "Negative";
+				break;
+			case Constants.POSITIVE:
+				panelResult.showImage = panelResult.positive;
+				text = "Positive";
+				break;
+			case Constants.NEUTRAL:
+				panelResult.showImage = panelResult.neutral;
+				text = "Neutral";
+				break;
+			}
+			panelResult.repaint();
+			resultLabel.setText(text + ": " + Math.round(percentage*100) + "%");
+		}
+
+		@Override
+		public void setLoading() {
+			showImage = loading;
+			resultLabel.setVisible(false);
+			repaint();
+		}
+
+		@Override
+		public void clear() {
+			resultLabel.setText("no results");
+			showImage = null;
+			repaint();
 		}
 	}
 
@@ -213,7 +249,7 @@ public class MainWindow {
 					@Override
 					public void run() {
 						System.out.println("Classifying data...");
-						Converter.classify(textModelPath.getText(), textArffPath.getText());
+						Converter.classify(textModelPath.getText(), textArffPath.getText(), panelResult);
 						System.out.println("Classifying data ended");
 					}
 				}).start();
@@ -221,21 +257,21 @@ public class MainWindow {
 			}
 		});
 
-		MainPanel panel_3 = new MainPanel();
+		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(new BorderLayout());
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBounds(478, 167, 296, 139);
 		mainFrame.getContentPane().add(panel_3);
 		
-		MainPanel panelResult = new MainPanel();
-		panelResult.setLayout(null);
-		//panelResult.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelResult.setBounds(478, 167, 296, 139);
-		//mainFrame.getContentPane().add(panelResult);
-		panel_3.add(panelResult, BorderLayout.NORTH);
+		JPanel panel_4 = new JPanel();
+		panel_3.add(panel_4, BorderLayout.SOUTH);
 		
-		JLabel lblResult = new JLabel("result");
-		panel_3.add(lblResult, BorderLayout.SOUTH);
+		panelResult = new MainPanel();
+		panelResult.setBounds(478, 167, 296, 139);
+		panel_3.add(panelResult, BorderLayout.CENTER);
+		
+		resultLabel = new JLabel("no results");
+		panel_4.add(resultLabel, BorderLayout.SOUTH);
 		
 
 
@@ -349,4 +385,5 @@ public class MainWindow {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
 }
