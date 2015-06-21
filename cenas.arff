@@ -1,0 +1,20 @@
+@relation _home_tiago_Desktop_review_polarity_sentences
+
+@attribute text string
+@attribute @@class@@ {neg,pos,neu}
+
+@data
+'if we don\'t demand a standard of quality for the art that we choose , we deserve the trash that we get . \n',neg
+'by-the-numbers yarn . \n',neg
+'dripping with cliche and bypassing no opportunity to trivialize the material . \n',neg
+'very well made , but doesn\'t generate a lot of tension . \n',neg
+'everything that\'s worthwhile about collision course can already be seen on television . \n',neg
+'it has the right approach and the right opening premise , but it lacks the zest and it goes for a plot twist instead of trusting the material . \n',neg
+'an unfortunate title for a film that has nothing endearing about it . \n',neg
+'once you get into its rhythm . . . the movie becomes a heady experience . \n',pos
+'it\'s a wise and powerful tale of race and culture forcefully told , with superb performances throughout . \n',pos
+'much has been written about those years when the psychedelic \'60s grooved over into the gay \'70s , but words don\'t really do the era justice . you have to see it . \n',pos
+'it\'s hard to imagine alan arkin being better than he is in this performance . \n',pos
+'shanghai ghetto may not be as dramatic as roman polanski\'s the pianist , but its compassionate spirit soars every bit as high . \n',pos
+'captivates and shows how a skillful filmmaker can impart a message without bludgeoning the audience over the head . \n',pos
+'daughter from danang is a film that should be seen by all , especially those who aren\'t aware of , or have forgotten about the unmentioned victims of war . \n',pos

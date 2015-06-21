@@ -33,8 +33,8 @@ public class Python {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		Converter c = new Converter(theme);
-		c.generateArff(savePath);
+
+		WekaConnection.generateArff(savePath, theme);
 		System.out.println("Generating arff ended");
 	}
 }

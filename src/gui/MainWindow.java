@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import logic.Converter;
+import logic.WekaConnection;
 import logic.Python;
 import settings.Constants;
 
@@ -38,7 +38,7 @@ public class MainWindow {
 	private JFileChooser arffFileSaver= new JFileChooser();
 	private JTextField textNoResults;
 	public static JTextField textArffPath;
-	private JTextField textField;
+	private JTextField textArffLearning;
 	private JLabel resultLabel;
 	private MainPanel panelResult;
 
@@ -91,7 +91,12 @@ public class MainWindow {
 				panelResult.showImage = panelResult.neutral;
 				text = "Neutral";
 				break;
+			default:
+				panelResult.showImage = panelResult.positive;
+				resultLabel.setText(result);
+				return;
 			}
+			
 			panelResult.repaint();
 			resultLabel.setText(text + ": " + Math.round(percentage*100) + "%");
 		}
@@ -160,12 +165,24 @@ public class MainWindow {
 		btnExport.setBounds(274, 67, 171, 25);
 		panel.add(btnExport);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(162, 25, 283, 25);
-		panel.add(textField);
+		textArffLearning = new JTextField();
+		textArffLearning.setColumns(10);
+		textArffLearning.setBounds(162, 25, 283, 25);
+		panel.add(textArffLearning);
 
 		JButton button = new JButton("Load Arff");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int returnVal = arffFileChooser.showOpenDialog(mainFrame);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = arffFileChooser.getSelectedFile();
+					textArffLearning.setText(file.getAbsolutePath());
+				} else {
+					System.out.println("Open command cancelled by user.");
+				}
+			}
+		});
 		button.setBounds(22, 25, 117, 25);
 		panel.add(button);
 
@@ -249,7 +266,15 @@ public class MainWindow {
 					@Override
 					public void run() {
 						System.out.println("Classifying data...");
-						Converter.classify(textModelPath.getText(), textArffPath.getText(), panelResult);
+						try {
+							WekaConnection.classify(textModelPath.getText(), textArffPath.getText(), panelResult);
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(mainFrame,
+									"There is a problem with your model!",
+									"Error",
+									JOptionPane.ERROR_MESSAGE);
+							e.printStackTrace();
+						}
 						System.out.println("Classifying data ended");
 					}
 				}).start();
@@ -367,7 +392,35 @@ public class MainWindow {
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Converter.generateModel(modelPath, arffPath, panelResult);
+				if(textArffLearning.getText().equals("")) {
+					JOptionPane.showMessageDialog(mainFrame,
+							"You must select a valid arff file!",
+							"Incomplete",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				String modelPath = null;
+				int returnVal = modelFileChooser.showSaveDialog(mainFrame);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = modelFileChooser.getSelectedFile();
+					System.out.println("Opening: " + file.getName());
+					modelPath = file.getAbsolutePath();
+				} else {
+					System.out.println("Open command cancelled by user.");
+					return;
+				}	
+				
+				try {
+					WekaConnection.generateModel(modelPath, textArffLearning.getText(), panelResult);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(mainFrame,
+							"Something went wrong, maybe there are problems in the configuration file!",
+							"Error",
+							JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
 				
 			}
 		});
