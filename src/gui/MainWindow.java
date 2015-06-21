@@ -1,13 +1,19 @@
 package gui;
 
+import gui.ResultWindow.MainPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -16,15 +22,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Converter;
 import logic.Python;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class MainWindow {
 
@@ -36,6 +40,41 @@ public class MainWindow {
 	private JFileChooser arffFileSaver= new JFileChooser();
 	private JTextField textNoResults;
 	private JTextField textArffPath;
+	private JTextField textField;
+
+
+	class MainPanel extends JPanel {
+		private static final long serialVersionUID = 1L;
+
+		private static final String PATH_LOADING = "resources/loader.gif";
+		private static final String PATH_POSITIVE = "resources/pos.png";
+		private static final String PATH_NEGATIVE = "resources/neg.png";
+		private static final String PATH_NEUTRAL = "resources/neu.png";
+
+		private Image loading;
+		private Image positive;
+		private Image neutral;
+		private Image negative;
+		private Image showImage;
+
+
+		public MainPanel() {
+			loading = Toolkit.getDefaultToolkit().createImage(PATH_LOADING);
+			positive = Toolkit.getDefaultToolkit().createImage(PATH_POSITIVE);
+			neutral = Toolkit.getDefaultToolkit().createImage(PATH_NEUTRAL);
+			negative = Toolkit.getDefaultToolkit().createImage(PATH_NEGATIVE);
+			showImage = neutral;
+			repaint();
+		}
+
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			if(showImage != null)
+				g.drawImage(showImage, 100, 10,100,100,this);
+		}
+	}
+
 
 	/**
 	 * Launch the application.
@@ -67,23 +106,32 @@ public class MainWindow {
 	private void initialize() {
 		mainFrame = new JFrame();
 		mainFrame.setTitle("Supervised learning");
-		mainFrame.setBounds(100, 100, 483, 400);
+		mainFrame.setBounds(100, 100, 800, 350);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Supervised Learning", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(12, 182, 212, 150);
+		panel.setBounds(12, 167, 457, 139);
 		mainFrame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JButton btnNewLearning = new JButton("New");
-		btnNewLearning.setBounds(20, 44, 171, 33);
+		JButton btnNewLearning = new JButton("Start or Resume");
+		btnNewLearning.setBounds(91, 67, 171, 25);
 		panel.add(btnNewLearning);
 
-		JButton btnResumeLearning = new JButton("Resume");
-		btnResumeLearning.setBounds(20, 88, 171, 33);
+		JButton btnResumeLearning = new JButton("Export Model");
+		btnResumeLearning.setBounds(274, 67, 171, 25);
 		panel.add(btnResumeLearning);
+
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(162, 25, 283, 25);
+		panel.add(textField);
+
+		JButton button = new JButton("Load Arff");
+		button.setBounds(22, 25, 117, 25);
+		panel.add(button);
 
 		//file chooser - set current directory and accept only model files
 		modelFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -114,7 +162,7 @@ public class MainWindow {
 		textModelPath.setColumns(10);
 
 		JButton btnStartAnalysis = new JButton("Start Polarity Analysis");
-		btnStartAnalysis.setBounds(245, 96, 200, 31);
+		btnStartAnalysis.setBounds(245, 96, 200, 25);
 		panel_1.add(btnStartAnalysis);
 
 		textArffPath = new JTextField();
@@ -149,7 +197,7 @@ public class MainWindow {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				
+
 				File f1 = new File(textModelPath.getText());
 				File f2 = new File(textArffPath.getText());
 				if(!f1.exists() || !f2.exists()) {
@@ -159,7 +207,7 @@ public class MainWindow {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				
+
 				new Thread(new Runnable() {
 
 					@Override
@@ -173,27 +221,47 @@ public class MainWindow {
 			}
 		});
 
+		MainPanel panel_3 = new MainPanel();
+		panel_3.setLayout(new BorderLayout());
+		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_3.setBounds(478, 167, 296, 139);
+		mainFrame.getContentPane().add(panel_3);
+		
+		MainPanel panelResult = new MainPanel();
+		panelResult.setLayout(null);
+		//panelResult.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelResult.setBounds(478, 167, 296, 139);
+		//mainFrame.getContentPane().add(panelResult);
+		panel_3.add(panelResult, BorderLayout.NORTH);
+		
+		JLabel lblResult = new JLabel("result");
+		panel_3.add(lblResult, BorderLayout.SOUTH);
+		
+
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Download", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(257, 182, 212, 150);
+		panel_2.setBounds(478, 12, 296, 139);
 		mainFrame.getContentPane().add(panel_2);
 
 		textTheme = new JTextField();
-		textTheme.setBounds(79, 27, 108, 31);
+		textTheme.setBounds(166, 26, 108, 25);
 		panel_2.add(textTheme);
 		textTheme.setColumns(10);
 
-		JLabel lblTheme = new JLabel("Theme:");
-		lblTheme.setBounds(16, 27, 58, 31);
+		JLabel lblTheme = new JLabel("Hashtag:");
+		lblTheme.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTheme.setBounds(12, 26, 142, 31);
 		panel_2.add(lblTheme);
 
 		JButton btnDownload = new JButton("Download");
-		btnDownload.setBounds(57, 102, 117, 25);
+		btnDownload.setBounds(101, 101, 117, 25);
 		panel_2.add(btnDownload);
 
-		JLabel lblNumberOfResults = new JLabel("No/Nº:");
-		lblNumberOfResults.setBounds(16, 59, 58, 31);
+		JLabel lblNumberOfResults = new JLabel("Number of results:");
+		lblNumberOfResults.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNumberOfResults.setBounds(12, 58, 142, 31);
 		panel_2.add(lblNumberOfResults);
 
 		textNoResults = new JTextField();
@@ -207,7 +275,7 @@ public class MainWindow {
 			}
 		});
 		textNoResults.setColumns(10);
-		textNoResults.setBounds(79, 59, 108, 31);
+		textNoResults.setBounds(166, 58, 108, 25);
 		panel_2.add(textNoResults);
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -221,7 +289,7 @@ public class MainWindow {
 				}
 
 				arffFileSaver.setSelectedFile(new File(textTheme.getText() + "_" + textNoResults.getText() + ".arff"));
-				
+
 				int returnVal = arffFileSaver.showSaveDialog(mainFrame);
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
