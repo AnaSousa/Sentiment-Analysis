@@ -1,0 +1,11 @@
+@relation sun
+
+@attribute text string
+@attribute @@class@@ {neg,neu,pos}
+
+@data
+'Sunday afternoon binge watching #GreysAnatomy episodes is the best.','pos'
+'Sunday afternoon binge watching episodes is the best.','pos'
+'Sunday afternoon was horrible.','neg'
+'Sunday afternoon binge episodes.','neu'
+'j','neu'

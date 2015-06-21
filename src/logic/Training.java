@@ -70,18 +70,31 @@ public class Training {
 		return phrases;
 	}
 
-	public void saveToArffFile() {
+	public void saveToArffFile(Vector<EvaluatedPhrase> result) {
 		
 		try {
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("status.arff")));
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("result.arff")));
 			
-			bw.write("@relation\n"); //TODO:
-			bw.write("@attribute\n"); //TODO:
+			bw.write("@relation ");
+			bw.write("sun\n\n"); //TODO:
+			bw.write("@attribute text string\n" +
+					"@attribute @@class@@ {neg,neu,pos}\n\n"
+					+ "@data\n"); 
 			
-			bw.write("@data\n");
-			
-			for(int i = 0; i < phrases.size(); i++)
-				bw.write(phrases.get(i).str + "\n");
+			for(int i = 0; i < phrases.size(); i++) {
+				
+				int value = result.get(i).value;
+				String value_result = new String();
+				
+				if(value == 0)
+					value_result = "neu";
+				else if(value < 0)
+					value_result = "neg";
+				else
+					value_result = "pos";
+				
+				bw.write("'" + result.get(i).str + "','" + value_result + "'\n");
+			}
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
