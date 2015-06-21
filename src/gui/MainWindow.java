@@ -366,7 +366,8 @@ public class MainWindow {
 
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
+				//Converter.generateModel(modelPath, arffPath, panelResult);
 				
 			}
 		});

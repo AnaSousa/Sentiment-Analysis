@@ -1,0 +1,9 @@
+@relation sunny
+
+@attribute text string
+@attribute @@class@@ {neg,pos}
+
+@data
+'Right it s #sunny today and it s #summer so lets get some bloody #shorts from @siksilk out there\u2026',?
+'Right it s #sunny today and it s #summer so lets get some bloody #shorts from @siksilk out there\u2026',?
+'Right it s #sunny today and it s #summer so lets get some bloody #shorts from @siksilk out there\u2026',?
