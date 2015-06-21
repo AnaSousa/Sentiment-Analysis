@@ -167,7 +167,7 @@ public class SupervisedLearningWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				System.out.println("Writing to arff file training results..");
-				training.saveToArffFile(training_phrases);
+				training.saveToArffFile(training_phrases, count - 1);
 				System.out.println("Finished writing to arff file training results..");
 				
 			}
