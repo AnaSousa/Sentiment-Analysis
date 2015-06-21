@@ -373,27 +373,34 @@ public class MainWindow {
 					return;
 				}
 				panelResult.setLoading();
-				arffFileSaver.setSelectedFile(new File(textTheme.getText() + "_" + textNoResults.getText() + ".arff"));
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						arffFileSaver.setSelectedFile(new File(textTheme.getText() + "_" + textNoResults.getText() + ".arff"));
 
-				int returnVal = arffFileSaver.showSaveDialog(mainFrame);
+						int returnVal = arffFileSaver.showSaveDialog(mainFrame);
 
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = arffFileSaver.getSelectedFile();
-					System.out.println("Opening: " + file.getName());
-					textArffPath.setText(file.getAbsolutePath());
-					try {
-						Python.getData(textTheme.getText(), textNoResults.getText(), file.getAbsolutePath());
-					} catch (IOException | InterruptedException e1) {
-						e1.printStackTrace();
-						panelResult.setMessage("Something went wrong!", Constants.INSUCCESS);
-						return;
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File file = arffFileSaver.getSelectedFile();
+							System.out.println("Opening: " + file.getName());
+							textArffPath.setText(file.getAbsolutePath());
+							try {
+								Python.getData(textTheme.getText(), textNoResults.getText(), file.getAbsolutePath());
+							} catch (IOException | InterruptedException e1) {
+								e1.printStackTrace();
+								panelResult.setMessage("Something went wrong!", Constants.INSUCCESS);
+								return;
+							}
+						} else {
+							System.out.println("Open command cancelled by user.");
+							panelResult.clear();
+							return;
+						}
+						panelResult.setMessage("Download successfull", Constants.SUCCESS);
 					}
-				} else {
-					System.out.println("Open command cancelled by user.");
-					panelResult.clear();
-					return;
-				}
-				panelResult.setMessage("Download successfull", Constants.SUCCESS);
+				}).start();
+				
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
