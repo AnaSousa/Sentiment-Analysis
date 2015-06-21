@@ -164,7 +164,7 @@ public class WekaConnection {
 
 		new File("tempfile.arff").delete();
 
-		panelResult.setResult("Generated Model with success", 100);
+		panelResult.setMessage("Generated Model with success", Constants.SUCCESS);
 	}
 
 

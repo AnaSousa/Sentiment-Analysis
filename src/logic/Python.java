@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 
 public class Python {
 	
-	static public void getData(String theme, String noResults, String savePath) {
+	static public void getData(String theme, String noResults, String savePath) throws IOException, InterruptedException {
 		System.out.println("Python starting...");
-		try {
+		
 			Runtime r = Runtime.getRuntime();
 			Process p = r.exec("python ./twitterPython/app.py " + theme + " " + noResults);
 			p.waitFor();
@@ -21,9 +21,6 @@ public class Python {
 
 			b.close();
 
-		} catch (IOException | InterruptedException e1) {
-			e1.printStackTrace();
-		}
 		System.out.println("Python ended");
 		
 		

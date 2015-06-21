@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -50,11 +51,15 @@ public class MainWindow {
 		private static final String PATH_POSITIVE = "resources/pos.png";
 		private static final String PATH_NEGATIVE = "resources/neg.png";
 		private static final String PATH_NEUTRAL = "resources/neu.png";
+		private static final String PATH_SUCCESS = "resources/success.png";
+		private static final String PATH_INSUCCESS = "resources/insuccess.png";
 
 		private Image loading;
 		private Image positive;
 		private Image neutral;
 		private Image negative;
+		private Image success;
+		private Image insuccess;
 		private Image showImage;
 
 
@@ -63,6 +68,8 @@ public class MainWindow {
 			positive = Toolkit.getDefaultToolkit().createImage(PATH_POSITIVE);
 			neutral = Toolkit.getDefaultToolkit().createImage(PATH_NEUTRAL);
 			negative = Toolkit.getDefaultToolkit().createImage(PATH_NEGATIVE);
+			success = Toolkit.getDefaultToolkit().createImage(PATH_SUCCESS);
+			insuccess = Toolkit.getDefaultToolkit().createImage(PATH_INSUCCESS);
 			showImage = null;
 			repaint();
 		}
@@ -72,7 +79,7 @@ public class MainWindow {
 			super.paintComponent(g);
 			if(showImage != null)
 				//g.drawImage(showImage, 110, 10,50,50,this);
-				g.drawImage(showImage, 90, 0,85,85,this);
+				g.drawImage(showImage, 90, 0,80,80,this);
 		}
 		
 		public void setResult(String result, float percentage) {
@@ -110,9 +117,25 @@ public class MainWindow {
 
 		@Override
 		public void clear() {
+			resultLabel.setVisible(true);
 			resultLabel.setText("no results");
 			showImage = null;
 			repaint();
+		}
+
+		@Override
+		public void setMessage(String txt, int icon) {
+			resultLabel.setVisible(true);
+			switch (icon) {
+			case Constants.SUCCESS:
+				showImage = success;
+				break;
+			case Constants.INSUCCESS:
+				showImage = insuccess;
+				break;
+			}
+			
+			resultLabel.setText(txt);
 		}
 	}
 
@@ -146,7 +169,8 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		mainFrame = new JFrame();
-		mainFrame.setTitle("Supervised learning");
+		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("./resources/twitter.png"));
+		mainFrame.setTitle("Twitter Polarity Analysis");
 		mainFrame.setBounds(100, 100, 800, 350);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(null);
@@ -289,6 +313,7 @@ public class MainWindow {
 		mainFrame.getContentPane().add(panel_3);
 		
 		JPanel panel_4 = new JPanel();
+		panel_4.setOpaque(false);
 		panel_3.add(panel_4, BorderLayout.SOUTH);
 		
 		panelResult = new MainPanel();
@@ -340,7 +365,6 @@ public class MainWindow {
 		panel_2.add(textNoResults);
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				if(textTheme.getText().equals("") || textNoResults.getText().equals("") || textTheme.getText() == null || textNoResults.getText() == null){
 					JOptionPane.showMessageDialog(mainFrame,
 							"You must select a theme and the number of results.",
@@ -348,7 +372,7 @@ public class MainWindow {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-
+				panelResult.setLoading();
 				arffFileSaver.setSelectedFile(new File(textTheme.getText() + "_" + textNoResults.getText() + ".arff"));
 
 				int returnVal = arffFileSaver.showSaveDialog(mainFrame);
@@ -357,11 +381,19 @@ public class MainWindow {
 					File file = arffFileSaver.getSelectedFile();
 					System.out.println("Opening: " + file.getName());
 					textArffPath.setText(file.getAbsolutePath());
-					Python.getData(textTheme.getText(), textNoResults.getText(), file.getAbsolutePath());
+					try {
+						Python.getData(textTheme.getText(), textNoResults.getText(), file.getAbsolutePath());
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
+						panelResult.setMessage("Something went wrong!", Constants.INSUCCESS);
+						return;
+					}
 				} else {
 					System.out.println("Open command cancelled by user.");
+					panelResult.clear();
 					return;
-				}				
+				}
+				panelResult.setMessage("Download successfull", Constants.SUCCESS);
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
@@ -415,6 +447,7 @@ public class MainWindow {
 				try {
 					WekaConnection.generateModel(modelPath, textArffLearning.getText(), panelResult);
 				} catch (Exception e) {
+					panelResult.setMessage("Something went wrong!", Constants.INSUCCESS);
 					JOptionPane.showMessageDialog(mainFrame,
 							"Something went wrong, maybe there are problems in the configuration file!",
 							"Error",
