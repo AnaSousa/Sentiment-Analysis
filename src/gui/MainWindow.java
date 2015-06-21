@@ -37,7 +37,7 @@ public class MainWindow {
 	private JFileChooser arffFileChooser = new JFileChooser();
 	private JFileChooser arffFileSaver= new JFileChooser();
 	private JTextField textNoResults;
-	private JTextField textArffPath;
+	public static JTextField textArffPath;
 	private JTextField textField;
 	private JLabel resultLabel;
 	private MainPanel panelResult;
