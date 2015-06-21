@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import logic.Training;
 import logic.Training.EvaluatedPhrase;
@@ -53,7 +55,14 @@ public class SupervisedLearningWindow {
 	 * Create the application.
 	 */
 	public SupervisedLearningWindow() {
-
+		
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		training = new Training();
 		training_phrases = training.getPhrases();
 		initialize();
@@ -156,7 +165,11 @@ public class SupervisedLearningWindow {
 		JButton btnFinish = new JButton("Finish");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				training.saveToArffFile();
+				
+				System.out.println("Writing to arff file training results..");
+				training.saveToArffFile(training_phrases);
+				System.out.println("Finished writing to arff file training results..");
+				
 			}
 		});
 		btnFinish.setBounds(164, 150, 117, 25);
