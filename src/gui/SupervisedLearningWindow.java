@@ -22,9 +22,16 @@ import logic.Training.EvaluatedPhrase;
 public class SupervisedLearningWindow {
 
 	public JFrame windowLearning;
-	private Vector<EvaluatedPhrase> training_phrases = new Vector<EvaluatedPhrase>();
-	private int count = 0;
+	
 	private Training training;
+	private Vector<EvaluatedPhrase> training_phrases = new Vector<EvaluatedPhrase>();
+	private EvaluatedPhrase currentPhrase = null;
+	private int count = 0;
+	
+	private int NEUTRAL_VALUE = 0;
+	private int POSITIVE_VALUE = 1;
+	private int NEGATIVE_VALUE = -1;
+	
 
 	/**
 	 * Launch the application.
@@ -69,10 +76,10 @@ public class SupervisedLearningWindow {
 		phrasesArea.setBorder(BorderFactory.createEtchedBorder());
 		windowLearning.getContentPane().add(phrasesArea);
 
-		EvaluatedPhrase ep = null;
+		//EvaluatedPhrase ep = null;
 		if(count < training_phrases.size()) {
-			ep = training_phrases.get(count);
-			phrasesArea.setText(ep.str);
+			currentPhrase = training_phrases.get(count);
+			phrasesArea.setText(currentPhrase.str);
 			count++;
 		} else {
 			phrasesArea.setText("Ficheiro vazio, tente outra vez");
@@ -109,14 +116,37 @@ public class SupervisedLearningWindow {
 		windowLearning.getContentPane().add(rdbtnNegative);
 		rdbtnsPolarity.add(rdbtnNegative);
 
-		if(ep.has_value)
+		if(currentPhrase.has_value)
 		{
-			if(ep.value == 0)
+			if(currentPhrase.value == 0)
 				rdbtnNeutral.setSelected(true);
-			else if(ep.value < 0)
+			else if(currentPhrase.value < 0)
 				rdbtnNegative.setSelected(true);
 			else rdbtnPositive.setSelected(true);
 		}
+		
+		rdbtnPositive.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	currentPhrase.value = POSITIVE_VALUE;
+	        }
+		});
+		
+		rdbtnNeutral.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	currentPhrase.value = NEUTRAL_VALUE;
+	        }
+		});
+		
+		rdbtnNegative.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	currentPhrase.value = NEGATIVE_VALUE;
+	        }
+		});
+		
+		
 		
 		final JLabel labelTotal = new JLabel("1 / " + Integer.toString(training_phrases.size()));
 		labelTotal.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -140,15 +170,15 @@ public class SupervisedLearningWindow {
 				if(count - 2 >= 0) {
 					count--; count--;
 				
-					EvaluatedPhrase phrase = training_phrases.get(count);
-					phrasesArea.setText("" + phrase.str);
+					currentPhrase = training_phrases.get(count);
+					phrasesArea.setText("" + currentPhrase.str);
 
 					rdbtnsPolarity.clearSelection();
-					if(phrase.has_value)
+					if(currentPhrase.has_value)
 					{
-						if(phrase.value == 0)
+						if(currentPhrase.value == 0)
 							rdbtnNeutral.setSelected(true);
-						else if(phrase.value < 0)
+						else if(currentPhrase.value < 0)
 							rdbtnNegative.setSelected(true);
 						else rdbtnPositive.setSelected(true);
 					}
@@ -161,7 +191,7 @@ public class SupervisedLearningWindow {
 
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EvaluatedPhrase phrase;
+				
 
 				if(!rdbtnPositive.isSelected() && !rdbtnNeutral.isSelected() && !rdbtnNegative.isSelected()) {
 					JOptionPane.showMessageDialog(windowLearning,
@@ -171,16 +201,23 @@ public class SupervisedLearningWindow {
 
 				} else if(count < training_phrases.size() && count >= 0) {
 					
-					phrase = training_phrases.get(count);
-					phrasesArea.setText(phrase.str);
+					/*if(rdbtnNegative.isSelected())
+						currentPhrase.value = NEGATIVE_VALUE;
+					else if(rdbtnNeutral.isSelected())
+						currentPhrase.value = NEUTRAL_VALUE;
+					else if(rdbtnPositive.isSelected())
+						currentPhrase.value = POSITIVE_VALUE;*/
+					
+					currentPhrase = training_phrases.get(count);
+					phrasesArea.setText(currentPhrase.str);
 
 					rdbtnsPolarity.clearSelection();
 
-					if(phrase.has_value)
+					if(currentPhrase.has_value)
 					{
-						if(phrase.value == 0)
+						if(currentPhrase.value == 0)
 							rdbtnNeutral.setSelected(true);
-						else if(phrase.value < 0)
+						else if(currentPhrase.value < 0)
 							rdbtnNegative.setSelected(true);
 						else rdbtnPositive.setSelected(true);
 					}
