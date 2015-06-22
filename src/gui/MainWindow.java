@@ -386,7 +386,10 @@ public class MainWindow {
 							System.out.println("Opening: " + file.getName());
 							textArffPath.setText(file.getAbsolutePath());
 							try {
-								Python.getData(textTheme.getText(), textNoResults.getText(), file.getAbsolutePath());
+								if(!Python.getData(textTheme.getText(), textNoResults.getText(), file.getAbsolutePath())) {
+									panelResult.setMessage("Something went wrong!", Constants.INSUCCESS);
+									return;
+								}
 							} catch (IOException | InterruptedException e1) {
 								e1.printStackTrace();
 								panelResult.setMessage("Something went wrong!", Constants.INSUCCESS);
