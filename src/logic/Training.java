@@ -56,6 +56,68 @@ public class Training {
 		}
 	}
 
+	public static boolean validateFile(String filenameTest) {
+
+		int num_line = 1;
+		BufferedReader br1 = null;
+		
+		try {
+			
+			br1 = new BufferedReader(new FileReader(filenameTest));
+			
+			String line;
+			while ((line = br1.readLine()) != null) {
+
+				if(num_line <= 6) {
+
+					if(num_line == 1) {
+						if(!line.contains("@relation "))
+							return false;	
+					} else if(num_line == 3) {
+						if(!line.equals("@attribute text string"))
+							return false;	
+					} else if(num_line == 3) {
+						if(!line.equals("@attribute @@class@@ {neg,pos,neu}"))
+							return false;	
+					} else if(num_line == 6) {
+						if(!line.equals("@data"))
+							return false;	
+					}
+					num_line++;
+				}
+				else {
+
+					String[] parts = line.split("',");
+					String phrase = parts[0];
+
+					if(parts.length != 2)
+						return false;
+					
+					if (phrase == null || phrase.length() == 0 || phrase.charAt(0) != '\'')
+						return false;
+				
+					num_line++;
+				}
+			}
+
+		} catch (Exception e) {
+			return false;
+
+		} finally {
+
+			try {
+				br1.close();
+			} catch (IOException e) {
+				
+			}
+		}
+
+		if(num_line - 1 < 7)
+			return false;
+		
+		return true;
+	}
+
 	public Vector<String> getPhrases() {
 
 		initialSetup = new Vector<String>();
@@ -95,7 +157,7 @@ public class Training {
 
 			//e.printStackTrace();
 			System.out.println("File incorrect!");
-			
+
 		} finally {
 
 			try {
@@ -104,7 +166,7 @@ public class Training {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return phrasesNotEvaluated;
 	}
 
@@ -133,8 +195,8 @@ public class Training {
 
 	public void saveToArffFile(Vector<EvaluatedPhrase> evaluated, Vector<String> notEvaluated) {
 
-		
-		
+
+
 		try {
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false)));
 

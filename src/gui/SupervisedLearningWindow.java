@@ -98,14 +98,11 @@ public class SupervisedLearningWindow {
 			phrasesArea.setText(currentPhrase.str);
 			count++;
 		} else {
-			//phrasesArea.setText("Ficheiro vazio, tente outra vez");
 			
 			JOptionPane.showMessageDialog(windowLearning,
 					"File not valid, try again",
 					"",
 					JOptionPane.ERROR_MESSAGE);
-			//TODO: nao abrir a janela neste caso
-			//windowLearning.setVisible(false);
 		}
 		
 		phrasesArea.setRows(50);

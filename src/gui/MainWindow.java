@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import logic.Training;
 import logic.WekaConnection;
 import logic.Python;
 import settings.Constants;
@@ -476,8 +477,16 @@ public class MainWindow {
 	private void startSupervisedWindow() {
 
 		if(!textArffLearning.getText().equals("")) {
-			SupervisedLearningWindow learningWindow = new SupervisedLearningWindow();
-			learningWindow.windowLearning.setVisible(true);
+
+			if(Training.validateFile(textArffLearning.getText())) {
+				SupervisedLearningWindow learningWindow = new SupervisedLearningWindow();
+				learningWindow.windowLearning.setVisible(true);
+			}
+			else
+				JOptionPane.showMessageDialog(mainFrame,
+						"File not valid, try again",
+						"",
+						JOptionPane.ERROR_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(mainFrame,
 					"You must select a valid arff file!",
