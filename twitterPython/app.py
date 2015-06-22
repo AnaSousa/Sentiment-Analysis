@@ -3,11 +3,11 @@ import json
 from client import *
 
 if len(sys.argv) != 3:
-	print "Usage: python <filename> <hashtag> <number_of_results>"
+	print("Usage: python <filename> <hashtag> <number_of_results>")
 	sys.exit(1)
 
 if not sys.argv[2].isdigit():
-	print "Usage: python <filename> <hashtag> <number_of_results>"
+	print("Usage: python <filename> <hashtag> <number_of_results>")
 	sys.exit(1)
 
 hashtag = sys.argv[1]
