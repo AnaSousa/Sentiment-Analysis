@@ -1,0 +1,11 @@
+@relation sun
+
+@attribute text string
+@attribute @@class@@ {neg,pos,neu}
+
+@data
+'b Beautiful temple in Segeste in Sicily today on a boiling hot day \\xe2\\x98\\x80\\xef\\xb8\\x8f\\xf0\\x9f\\x87\\xae\\xf0\\x9f\\x87\\xb9 #Sicily #Italy #sun #summer\\xe2\\x80\\xa6 https://t.co/IHF3Vvhy05\\n ',neu
+'b And just like that the sun decided to shine. #freefeet #hammock #patio #catching #the #rays #sun\\xe2\\x80\\xa6 https://t.co/x1mBARov2b\\n ',pos
+'b This is what the #sun sounds like! So incredible @ScienceChannel http://t.co/8Kq2Rs5faZ\\n ',pos
+'b\"Can t wait to hit this bad boy in 3 weeks time! #tenerife #siam #park #summer #holiday #sun\\xe2\\x80\\xa6 https://t.co/QBiFxHadQA\\n\"',?
+'b The #sun \\xf0\\x9f\\x8c\\x9e and #rain \\xe2\\x98\\x94\\xef\\xb8\\x8f tonight #sky #weather #lenseflare \\xf0\\x9f\\x98\\x8e https://t.co/NcYBkxQjAM\\n ',?

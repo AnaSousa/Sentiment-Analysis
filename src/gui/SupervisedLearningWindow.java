@@ -76,13 +76,13 @@ public class SupervisedLearningWindow {
 		windowLearning = new JFrame();
 		windowLearning.setResizable(false);
 		windowLearning.setTitle("Supervised learning");
-		windowLearning.setBounds(100, 100, 442, 220);
+		windowLearning.setBounds(100, 100, 442, 254);
 		windowLearning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLearning.getContentPane().setLayout(null);
 
 		final JTextArea phrasesArea = new JTextArea(20, 50);
 		phrasesArea.setEditable(false);
-		phrasesArea.setBounds(12, 80, 412, 60);
+		phrasesArea.setBounds(12, 80, 412, 80);
 		phrasesArea.setBorder(BorderFactory.createEtchedBorder());
 		windowLearning.getContentPane().add(phrasesArea);
 
@@ -98,27 +98,24 @@ public class SupervisedLearningWindow {
 			phrasesArea.setText(currentPhrase.str);
 			count++;
 		} else {
-			//phrasesArea.setText("Ficheiro vazio, tente outra vez");
 			
 			JOptionPane.showMessageDialog(windowLearning,
 					"File not valid, try again",
 					"",
 					JOptionPane.ERROR_MESSAGE);
-			//TODO: nao abrir a janela neste caso
-			//windowLearning.setVisible(false);
 		}
 		
-		phrasesArea.setRows(25);
-		phrasesArea.setColumns(25);
+		phrasesArea.setRows(50);
+		phrasesArea.setColumns(50);
 		phrasesArea.setWrapStyleWord(true);
 		phrasesArea.setLineWrap(true);
 
 		JButton btnPrevious = new JButton("Previous");
-		btnPrevious.setBounds(12, 150, 117, 25);
+		btnPrevious.setBounds(12, 181, 117, 25);
 		windowLearning.getContentPane().add(btnPrevious);
 
 		JButton btnNext = new JButton("Next");
-		btnNext.setBounds(307, 150, 117, 25);
+		btnNext.setBounds(307, 181, 117, 25);
 		windowLearning.getContentPane().add(btnNext);
 
 		final ButtonGroup rdbtnsPolarity = new ButtonGroup();
@@ -201,7 +198,7 @@ public class SupervisedLearningWindow {
 				}
 			}
 		});
-		btnFinish.setBounds(164, 150, 117, 25);
+		btnFinish.setBounds(162, 181, 117, 25);
 		windowLearning.getContentPane().add(btnFinish);
 		windowLearning.getContentPane().setVisible(true);
 
