@@ -53,16 +53,16 @@ public class WekaConnection {
 
 	public static void classify(String modelPath, String arffPath, IMainPanel panelResult) throws Exception {
 		panelResult.setLoading();
-			
-		
+
+
 		Classifier cls = (Classifier) weka.core.SerializationHelper.read(modelPath);
-		
+
 		Instances inst = new Instances(
 				new BufferedReader(
 						new FileReader(arffPath)));
 
 		inst.setClassIndex(inst.numAttributes() - 1);
-		
+
 		int quantity[] = new int[3];
 		for (int i = 0; i < inst.numInstances(); i++) {
 			quantity[(int)cls.classifyInstance(inst.instance(i))]++; 
@@ -70,7 +70,7 @@ public class WekaConnection {
 
 		float percentage = (float) 0.0;
 		String max = "";
-		
+
 		if(quantity[0] > quantity[1] && quantity[0] > quantity[2]) {
 			percentage = (float) (quantity[0] * 1.0 / inst.numInstances());
 			max = Constants.NEGATIVE;
@@ -83,7 +83,7 @@ public class WekaConnection {
 			percentage = (float) (quantity[2] * 1.0 / inst.numInstances());
 			max = Constants.NEUTRAL;
 		}
-		
+
 
 		panelResult.setResult(max, percentage);
 	}
@@ -172,13 +172,19 @@ public class WekaConnection {
 
 	private static String removeUrl(String commentstr)
 	{
-		String urlPattern = "((https?|ftp|gopher|telnet|file|Unsure|http):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
-		Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
-		Matcher m = p.matcher(commentstr);
-		int i = 0;
-		while (m.find()) {
-			commentstr = commentstr.replaceAll(m.group(i),"").trim();
-			i++;
+		try {
+			String urlPattern = "((https?|ftp|gopher|telnet|file|Unsure|http):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+			Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
+			Matcher m = p.matcher(commentstr);
+			int i = 0;
+			while (m.find()) {
+				commentstr = commentstr.replaceAll(m.group(i),"").trim();
+				i++;
+			}
+			return commentstr;
+		}
+		catch(Exception e) {
+			System.err.println("Error removing url");
 		}
 		return commentstr;
 	}

@@ -77,7 +77,7 @@ public class SupervisedLearningWindow {
 		windowLearning.setResizable(false);
 		windowLearning.setTitle("Supervised learning");
 		windowLearning.setBounds(100, 100, 442, 254);
-		windowLearning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		windowLearning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		windowLearning.getContentPane().setLayout(null);
 
 		final JTextArea phrasesArea = new JTextArea(20, 50);
