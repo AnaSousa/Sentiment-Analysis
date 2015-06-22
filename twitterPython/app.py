@@ -34,7 +34,7 @@ for t in tweets['statuses']:
 	#print t['text'] +'\n'
 	f.write((t['text'] +'\n').encode('utf8'))
 
-print "end of script"
+print("end of script")
 
 
 
