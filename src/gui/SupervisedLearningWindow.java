@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -26,7 +25,8 @@ public class SupervisedLearningWindow {
 	public JFrame windowLearning;
 	
 	private Training training;
-	private Vector<EvaluatedPhrase> training_phrases = new Vector<EvaluatedPhrase>();
+	private Vector<String> training_phrases = new Vector<String>();
+	private Vector<EvaluatedPhrase> evaluated_phrases = new Vector<EvaluatedPhrase>();
 	private EvaluatedPhrase currentPhrase = null;
 	private int count = 0;
 	
@@ -38,7 +38,7 @@ public class SupervisedLearningWindow {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -49,8 +49,8 @@ public class SupervisedLearningWindow {
 				}
 			}
 		});
-	}
-
+	}*/
+	
 	/**
 	 * Create the application.
 	 */
@@ -87,7 +87,13 @@ public class SupervisedLearningWindow {
 
 		//EvaluatedPhrase ep = null;
 		if(count < training_phrases.size()) {
-			currentPhrase = training_phrases.get(count);
+			currentPhrase = training.getValue(count, training_phrases.get(count));
+			
+			if(currentPhrase != null)
+				evaluated_phrases.addElement(currentPhrase);
+			else
+				currentPhrase = evaluated_phrases.get(count);
+			
 			phrasesArea.setText(currentPhrase.str);
 			count++;
 		} else {
@@ -167,7 +173,7 @@ public class SupervisedLearningWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				System.out.println("Writing to arff file training results..");
-				training.saveToArffFile(training_phrases, count - 1);
+				training.saveToArffFile(evaluated_phrases, training_phrases, count - 1);
 				System.out.println("Finished writing to arff file training results..");
 				
 			}
@@ -183,7 +189,13 @@ public class SupervisedLearningWindow {
 				if(count - 2 >= 0) {
 					count--; count--;
 				
-					currentPhrase = training_phrases.get(count);
+					currentPhrase = training.getValue(count, training_phrases.get(count));
+					
+					if(currentPhrase != null)
+						evaluated_phrases.addElement(currentPhrase);
+					else
+						currentPhrase = evaluated_phrases.get(count);
+					
 					phrasesArea.setText("" + currentPhrase.str);
 
 					rdbtnsPolarity.clearSelection();
@@ -221,7 +233,13 @@ public class SupervisedLearningWindow {
 					else if(rdbtnPositive.isSelected())
 						currentPhrase.value = POSITIVE_VALUE;*/
 					
-					currentPhrase = training_phrases.get(count);
+					currentPhrase = training.getValue(count, training_phrases.get(count));
+					
+					if(currentPhrase != null)
+						evaluated_phrases.addElement(currentPhrase);
+					else
+						currentPhrase = evaluated_phrases.get(count);
+					
 					phrasesArea.setText(currentPhrase.str);
 
 					rdbtnsPolarity.clearSelection();

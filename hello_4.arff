@@ -1,10 +1,10 @@
-@relation beach
+@relation hello
 
 @attribute text string
 @attribute @@class@@ {neg,pos,neu}
 
 @data
-'Benfica must be regretting selling Bernardo Silva top player #PortugalSub21 #slb',neu
+'Benfica must be regretting selling Bernardo Silva top player #PortugalSub21 #slb',?
 'RT @CarvalhoFilipeL: #SLB fans MT\u201C@ProstateCancerC: Every participant at #DoItForDads has a reason for walking / running. \u2026',?
 'RT @CarvalhoFilipeL: #SLB fans MT\u201C@ProstateCancerC: Every participant at #DoItForDads has a reason for walking / running. \u2026',?
 '#SLB fans MT\u201C@ProstateCancerC: Every participant at #DoItForDads has a reason for walking / running. \u201D #CarregaBenfica',?

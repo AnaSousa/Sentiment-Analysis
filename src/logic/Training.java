@@ -1,5 +1,7 @@
 package logic;
 
+import gui.MainWindow;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -31,28 +33,34 @@ public class Training {
 	}
 
 	private BufferedReader br;
+	private String filename;
 	private BufferedWriter bw;
-	private Vector<EvaluatedPhrase> phrasesNotEvaluated;
+	private Vector<String> phrasesNotEvaluated;
 	private Vector<String> phrasesEvaluated;
 	private Vector<String> initialSetup;
+	private Vector<EvaluatedPhrase> phrasesEvaluatedByProlog;
 
 	public Training() {
 
 		try {
-			//br = new BufferedReader(new FileReader(MainWindow.textArffPath.getText()));
-			br = new BufferedReader(new FileReader("sun_5.arff"));
-			PrologSocket.getInstance().connect();
 
+			//br = new BufferedReader(new FileReader("sun_5.arff"));
+			filename = MainWindow.textArffPath.getText();
+			br = new BufferedReader(new FileReader(filename));
+			System.out.println("Opening " + filename);
+
+			PrologSocket.getInstance().connect();
+			phrasesEvaluatedByProlog = new Vector<EvaluatedPhrase>();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Vector<EvaluatedPhrase> getPhrases() {
+	public Vector<String> getPhrases() {
 
 		initialSetup = new Vector<String>();
 		phrasesEvaluated = new Vector<String>();
-		phrasesNotEvaluated = new Vector<EvaluatedPhrase>();
+		phrasesNotEvaluated = new Vector<String>();
 
 		int num_line = 1;
 
@@ -66,8 +74,6 @@ public class Training {
 				}
 				else {
 
-					//System.out.println(line);
-
 					String[] parts = line.split("',");
 					String phrase = parts[0];
 					String evaluation = parts[1];
@@ -76,17 +82,8 @@ public class Training {
 						phrase = phrase.substring(1, phrase.length());
 					}
 
-					System.out.println(phrase);
-					//System.out.println(evaluation);
-
 					if(evaluation.equals("?")) {
-						try {
-							int value = PrologSocket.getInstance().evaluateSentence(phrase);
-							phrasesNotEvaluated.add(new EvaluatedPhrase(phrase, value));
-
-						} catch (Exception e) {
-							phrasesNotEvaluated.add(new EvaluatedPhrase(phrase));
-						}
+						phrasesNotEvaluated.add(phrase);
 					} else {
 
 						phrasesEvaluated.add(line);
@@ -94,24 +91,49 @@ public class Training {
 				}
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
-		}
+			
+		} finally {
 
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return phrasesNotEvaluated;
 	}
 
-	public void saveToArffFile(Vector<EvaluatedPhrase> result, int num_evaluated) {
+	public EvaluatedPhrase getValue(int index, String phrase) {
+
+		if(index < phrasesEvaluatedByProlog.size())
+			return null;
 
 		try {
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("result.arff")));
 
-			/*bw.write("@relation ");
-			bw.write("sun\n\n"); //TODO:
-			bw.write("@attribute text string\n" +
-					"@attribute @@class@@ {neg,neu,pos}\n\n"
-					+ "@data\n"); */
+			System.out.println(phrase);
+
+			int value = PrologSocket.getInstance().evaluateSentence(phrase);
+			EvaluatedPhrase ev = new EvaluatedPhrase(phrase, value);
+			phrasesEvaluatedByProlog.addElement(ev);
+
+			return ev;
+
+		} catch (Exception e) {
+			EvaluatedPhrase ev = new EvaluatedPhrase(phrase);
+			phrasesEvaluatedByProlog.addElement(ev);
+
+			return ev;
+		}
+	}
+
+	public void saveToArffFile(Vector<EvaluatedPhrase> evaluated, Vector<String> notEvaluated, int num_evaluated) {
+
+		try {
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false)));
 
 			for(int i = 0; i < initialSetup.size(); i++) {
 
@@ -126,14 +148,14 @@ public class Training {
 				bw.write("\n" + phrasesEvaluated.get(i));
 			}
 
-			for(int i = 0; i < result.size(); i++) {
+			for(int i = 0; i < notEvaluated.size(); i++) {
 
 				if(i > num_evaluated) {
-					bw.write("\n'" + result.get(i).str + "',?");
-					
+					bw.write("\n'" + notEvaluated.get(i) + "',?");
+
 				} else {
-					
-					int value = result.get(i).value;
+
+					int value = evaluated.get(i).value;
 					String value_result = new String();
 
 					if(value == 0)
@@ -143,7 +165,7 @@ public class Training {
 					else
 						value_result = "pos";
 
-					bw.write("\n'" + result.get(i).str + "'," + value_result);
+					bw.write("\n'" + evaluated.get(i).str + "'," + value_result);
 				}
 			}
 
@@ -160,5 +182,4 @@ public class Training {
 			catch (Exception ex) {}
 		}
 	}
-
 }
