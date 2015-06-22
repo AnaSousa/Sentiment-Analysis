@@ -32,7 +32,7 @@ f = open('statuses.txt', 'w')
  
 for t in tweets['statuses']:
 	#print t['text'] +'\n'
-	f.write((t['text'] +'\n').encode('utf8'))
+	f.write(str((t['text'] +'\n').encode('utf8')))
 
 print("end of script")
 

@@ -1,0 +1,7 @@
+@relation sun
+
+@attribute text string
+@attribute @@class@@ {neg,pos,neu}
+
+@data
+'b RT @MyLife4Iran: US Senators\\xe2\\x80\\x99 bill to sanction Lebanese Hezbollah  #health #sun #world\\n b RT @MyLife4Iran: Expel misogynic Iranian regime from the International Olympic Committee! Defend Iranian women and a :t.co/ebwY2NtmcF\\xe2\\x80\\xa6\\n b RT @MyLife4Iran: New #Syria rebel group formed in Qunaytirah Province :t.co/Gw73vDwUJj #health #sun #world\\n b RT @MyLife4Iran: UK concerned over #Iran rights violations :t.co/vDEk5EfV1r #health #sun #world\\n b My backyard for the week! \\xf0\\x9f\\x98\\x8a #florida #pensacola #sun #beer #party s:t.co/riuSXmTPh3\\n ',?
