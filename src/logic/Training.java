@@ -16,7 +16,7 @@ public class Training {
 	public class EvaluatedPhrase
 	{
 		public int value;
-		public final boolean has_value;
+		public boolean has_value;
 		public final String str;
 
 		public EvaluatedPhrase(String s, int v) {
@@ -45,7 +45,7 @@ public class Training {
 		try {
 
 			//br = new BufferedReader(new FileReader("sun_5.arff"));
-			filename = MainWindow.textArffPath.getText();
+			filename = MainWindow.textArffLearning.getText();
 			br = new BufferedReader(new FileReader(filename));
 			System.out.println("Opening " + filename);
 
@@ -93,7 +93,8 @@ public class Training {
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("File incorrect!");
 			
 		} finally {
 
@@ -130,8 +131,10 @@ public class Training {
 		}
 	}
 
-	public void saveToArffFile(Vector<EvaluatedPhrase> evaluated, Vector<String> notEvaluated, int num_evaluated) {
+	public void saveToArffFile(Vector<EvaluatedPhrase> evaluated, Vector<String> notEvaluated) {
 
+		
+		
 		try {
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false)));
 
@@ -148,9 +151,10 @@ public class Training {
 				bw.write("\n" + phrasesEvaluated.get(i));
 			}
 
+			int num_evaluated = evaluated.size();
 			for(int i = 0; i < notEvaluated.size(); i++) {
 
-				if(i > num_evaluated) {
+				if(i >= num_evaluated) {
 					bw.write("\n'" + notEvaluated.get(i) + "',?");
 
 				} else {

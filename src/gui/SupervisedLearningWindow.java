@@ -17,23 +17,25 @@ import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.omg.PortableServer.CurrentOperations;
+
 import logic.Training;
 import logic.Training.EvaluatedPhrase;
 
 public class SupervisedLearningWindow {
 
 	public JFrame windowLearning;
-	
+
 	private Training training;
 	private Vector<String> training_phrases = new Vector<String>();
 	private Vector<EvaluatedPhrase> evaluated_phrases = new Vector<EvaluatedPhrase>();
 	private EvaluatedPhrase currentPhrase = null;
 	private int count = 0;
-	
+
 	private int NEUTRAL_VALUE = 0;
 	private int POSITIVE_VALUE = 1;
 	private int NEGATIVE_VALUE = -1;
-	
+
 
 	/**
 	 * Launch the application.
@@ -50,17 +52,16 @@ public class SupervisedLearningWindow {
 			}
 		});
 	}*/
-	
+
 	/**
 	 * Create the application.
 	 */
 	public SupervisedLearningWindow() {
-		
+
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		training = new Training();
@@ -88,17 +89,25 @@ public class SupervisedLearningWindow {
 		//EvaluatedPhrase ep = null;
 		if(count < training_phrases.size()) {
 			currentPhrase = training.getValue(count, training_phrases.get(count));
-			
+
 			if(currentPhrase != null)
 				evaluated_phrases.addElement(currentPhrase);
 			else
 				currentPhrase = evaluated_phrases.get(count);
-			
+
 			phrasesArea.setText(currentPhrase.str);
 			count++;
 		} else {
-			phrasesArea.setText("Ficheiro vazio, tente outra vez");
+			//phrasesArea.setText("Ficheiro vazio, tente outra vez");
+			
+			JOptionPane.showMessageDialog(windowLearning,
+					"File not valid, try again",
+					"",
+					JOptionPane.ERROR_MESSAGE);
+			//TODO: nao abrir a janela neste caso
+			//windowLearning.setVisible(false);
 		}
+		
 		phrasesArea.setRows(25);
 		phrasesArea.setColumns(25);
 		phrasesArea.setWrapStyleWord(true);
@@ -131,71 +140,84 @@ public class SupervisedLearningWindow {
 		windowLearning.getContentPane().add(rdbtnNegative);
 		rdbtnsPolarity.add(rdbtnNegative);
 
-		if(currentPhrase.has_value)
-		{
-			if(currentPhrase.value == 0)
-				rdbtnNeutral.setSelected(true);
-			else if(currentPhrase.value < 0)
-				rdbtnNegative.setSelected(true);
-			else rdbtnPositive.setSelected(true);
-		}
+		if(currentPhrase != null) {
+			if(currentPhrase.has_value)
+			{
+				if(currentPhrase.value == 0)
+					rdbtnNeutral.setSelected(true);
+				else if(currentPhrase.value < 0)
+					rdbtnNegative.setSelected(true);
+				else rdbtnPositive.setSelected(true);
+			}
+		} else
+			windowLearning.dispose();
 		
 		rdbtnPositive.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	currentPhrase.value = POSITIVE_VALUE;
-	        }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!currentPhrase.has_value)
+					currentPhrase.has_value = true;
+				currentPhrase.value = POSITIVE_VALUE;
+			}
 		});
-		
+
 		rdbtnNeutral.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	currentPhrase.value = NEUTRAL_VALUE;
-	        }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!currentPhrase.has_value)
+					currentPhrase.has_value = true;
+				currentPhrase.value = NEUTRAL_VALUE;
+			}
 		});
-		
+
 		rdbtnNegative.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	currentPhrase.value = NEGATIVE_VALUE;
-	        }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!currentPhrase.has_value)
+					currentPhrase.has_value = true;
+				currentPhrase.value = NEGATIVE_VALUE;
+			}
 		});
-		
-		
-		
+
 		final JLabel labelTotal = new JLabel("1 / " + Integer.toString(training_phrases.size()));
 		labelTotal.setFont(new Font("Dialog", Font.BOLD, 16));
 		labelTotal.setBounds(195, 12, 64, 25);
 		windowLearning.getContentPane().add(labelTotal);
-		
+
 		JButton btnFinish = new JButton("Finish");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				System.out.println("Writing to arff file training results..");
-				training.saveToArffFile(evaluated_phrases, training_phrases, count - 1);
-				System.out.println("Finished writing to arff file training results..");
-				
+
+				if(!rdbtnPositive.isSelected() && !rdbtnNeutral.isSelected() && !rdbtnNegative.isSelected()) {
+					JOptionPane.showMessageDialog(windowLearning,
+							"You must classify the phrase.",
+							"",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					System.out.println("Writing to arff file training results..");
+					training.saveToArffFile(evaluated_phrases, training_phrases);
+					System.out.println("Finished writing to arff file training results..");
+					windowLearning.dispose();
+				}
 			}
 		});
 		btnFinish.setBounds(164, 150, 117, 25);
 		windowLearning.getContentPane().add(btnFinish);
-
 		windowLearning.getContentPane().setVisible(true);
 
 		btnPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				if(count - 2 >= 0) {
 					count--; count--;
-				
+
 					currentPhrase = training.getValue(count, training_phrases.get(count));
-					
+
 					if(currentPhrase != null)
 						evaluated_phrases.addElement(currentPhrase);
 					else
 						currentPhrase = evaluated_phrases.get(count);
-					
+
 					phrasesArea.setText("" + currentPhrase.str);
 
 					rdbtnsPolarity.clearSelection();
@@ -207,7 +229,7 @@ public class SupervisedLearningWindow {
 							rdbtnNegative.setSelected(true);
 						else rdbtnPositive.setSelected(true);
 					}
-					
+
 					count++;
 					labelTotal.setText(Integer.toString(count) + " / " + Integer.toString(training_phrases.size()));
 				}
@@ -216,7 +238,7 @@ public class SupervisedLearningWindow {
 
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 
 				if(!rdbtnPositive.isSelected() && !rdbtnNeutral.isSelected() && !rdbtnNegative.isSelected()) {
 					JOptionPane.showMessageDialog(windowLearning,
@@ -225,21 +247,21 @@ public class SupervisedLearningWindow {
 							JOptionPane.ERROR_MESSAGE);
 
 				} else if(count < training_phrases.size() && count >= 0) {
-					
+
 					/*if(rdbtnNegative.isSelected())
 						currentPhrase.value = NEGATIVE_VALUE;
 					else if(rdbtnNeutral.isSelected())
 						currentPhrase.value = NEUTRAL_VALUE;
 					else if(rdbtnPositive.isSelected())
 						currentPhrase.value = POSITIVE_VALUE;*/
-					
+
 					currentPhrase = training.getValue(count, training_phrases.get(count));
-					
+
 					if(currentPhrase != null)
 						evaluated_phrases.addElement(currentPhrase);
 					else
 						currentPhrase = evaluated_phrases.get(count);
-					
+
 					phrasesArea.setText(currentPhrase.str);
 
 					rdbtnsPolarity.clearSelection();
@@ -255,7 +277,7 @@ public class SupervisedLearningWindow {
 
 					count++;
 					labelTotal.setText(Integer.toString(count) + " / " + Integer.toString(training_phrases.size()));
-					
+
 				}
 			}
 		});
