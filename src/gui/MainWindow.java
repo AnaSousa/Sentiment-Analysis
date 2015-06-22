@@ -38,8 +38,8 @@ public class MainWindow {
 	private JFileChooser arffFileChooser = new JFileChooser();
 	private JFileChooser arffFileSaver= new JFileChooser();
 	private JTextField textNoResults;
-	public static JTextField textArffPath;
-	private JTextField textArffLearning;
+	private JTextField textArffPath;
+	public static JTextField textArffLearning;
 	private JLabel resultLabel;
 	private MainPanel panelResult;
 
@@ -81,7 +81,7 @@ public class MainWindow {
 				//g.drawImage(showImage, 110, 10,50,50,this);
 				g.drawImage(showImage, 90, 0,80,80,this);
 		}
-		
+
 		public void setResult(String result, float percentage) {
 			resultLabel.setVisible(true);
 			String text = "";
@@ -103,7 +103,7 @@ public class MainWindow {
 				resultLabel.setText(result);
 				return;
 			}
-			
+
 			panelResult.repaint();
 			resultLabel.setText(text + ": " + Math.round(percentage*100) + "%");
 		}
@@ -134,7 +134,7 @@ public class MainWindow {
 				showImage = insuccess;
 				break;
 			}
-			
+
 			resultLabel.setText(txt);
 		}
 	}
@@ -184,6 +184,14 @@ public class MainWindow {
 		JButton btnNewLearning = new JButton("Start or Resume");
 		btnNewLearning.setBounds(91, 67, 171, 25);
 		panel.add(btnNewLearning);
+
+		btnNewLearning.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				startSupervisedWindow();
+			}
+		});
+
 
 		JButton btnExport = new JButton("Export Model");
 		btnExport.setBounds(274, 67, 171, 25);
@@ -311,18 +319,18 @@ public class MainWindow {
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBounds(478, 167, 296, 139);
 		mainFrame.getContentPane().add(panel_3);
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_4.setOpaque(false);
 		panel_3.add(panel_4, BorderLayout.SOUTH);
-		
+
 		panelResult = new MainPanel();
 		panelResult.setBounds(478, 167, 296, 139);
 		panel_3.add(panelResult, BorderLayout.CENTER);
-		
+
 		resultLabel = new JLabel("no results");
 		panel_4.add(resultLabel, BorderLayout.SOUTH);
-		
+
 
 
 		JPanel panel_2 = new JPanel();
@@ -374,7 +382,7 @@ public class MainWindow {
 				}
 				panelResult.setLoading();
 				new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						arffFileSaver.setSelectedFile(new File(textTheme.getText() + "_" + textNoResults.getText() + ".arff"));
@@ -403,7 +411,7 @@ public class MainWindow {
 						panelResult.setMessage("Download successfull", Constants.SUCCESS);
 					}
 				}).start();
-				
+
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
@@ -424,16 +432,11 @@ public class MainWindow {
 			}
 		});
 
-		btnNewLearning.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
 
-				startSupervisedWindow();
-			}
-		});
 
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				if(textArffLearning.getText().equals("")) {
 					JOptionPane.showMessageDialog(mainFrame,
 							"You must select a valid arff file!",
@@ -441,7 +444,7 @@ public class MainWindow {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				
+
 				String modelPath = null;
 				int returnVal = modelFileChooser.showSaveDialog(mainFrame);
 
@@ -453,7 +456,7 @@ public class MainWindow {
 					System.out.println("Open command cancelled by user.");
 					return;
 				}	
-				
+
 				try {
 					WekaConnection.generateModel(modelPath, textArffLearning.getText(), panelResult);
 				} catch (Exception e) {
@@ -464,7 +467,7 @@ public class MainWindow {
 							JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				}
-				
+
 			}
 		});
 
@@ -472,15 +475,15 @@ public class MainWindow {
 
 	private void startSupervisedWindow() {
 
-		if(!textTheme.getText().equals("")) {
+		if(!textArffLearning.getText().equals("")) {
 			SupervisedLearningWindow learningWindow = new SupervisedLearningWindow();
 			learningWindow.windowLearning.setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(mainFrame,
-					"You must specify a theme.",
-					"Empty theme",
-					JOptionPane.ERROR_MESSAGE);
+					"You must select a valid arff file!",
+					"Incomplete",
+					JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
+
 }
