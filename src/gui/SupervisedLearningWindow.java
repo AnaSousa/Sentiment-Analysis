@@ -76,13 +76,13 @@ public class SupervisedLearningWindow {
 		windowLearning = new JFrame();
 		windowLearning.setResizable(false);
 		windowLearning.setTitle("Supervised learning");
-		windowLearning.setBounds(100, 100, 442, 274);
+		windowLearning.setBounds(100, 100, 442, 254);
 		windowLearning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLearning.getContentPane().setLayout(null);
 
 		final JTextArea phrasesArea = new JTextArea(20, 50);
 		phrasesArea.setEditable(false);
-		phrasesArea.setBounds(12, 80, 412, 101);
+		phrasesArea.setBounds(12, 80, 412, 80);
 		phrasesArea.setBorder(BorderFactory.createEtchedBorder());
 		windowLearning.getContentPane().add(phrasesArea);
 
@@ -114,11 +114,11 @@ public class SupervisedLearningWindow {
 		phrasesArea.setLineWrap(true);
 
 		JButton btnPrevious = new JButton("Previous");
-		btnPrevious.setBounds(12, 206, 117, 25);
+		btnPrevious.setBounds(12, 181, 117, 25);
 		windowLearning.getContentPane().add(btnPrevious);
 
 		JButton btnNext = new JButton("Next");
-		btnNext.setBounds(307, 206, 117, 25);
+		btnNext.setBounds(307, 181, 117, 25);
 		windowLearning.getContentPane().add(btnNext);
 
 		final ButtonGroup rdbtnsPolarity = new ButtonGroup();
@@ -201,7 +201,7 @@ public class SupervisedLearningWindow {
 				}
 			}
 		});
-		btnFinish.setBounds(168, 206, 117, 25);
+		btnFinish.setBounds(162, 181, 117, 25);
 		windowLearning.getContentPane().add(btnFinish);
 		windowLearning.getContentPane().setVisible(true);
 
