@@ -24,7 +24,7 @@ public class PrologSocket {
 		}
 		int res;
 		try {
-			res = PrologSocket.getInstance().evaluateSentence("I am happy");
+			res = PrologSocket.getInstance().evaluateSentence("#Health #Recipes Mom-a-Licious : Healthy Recipes a b c d e f");
 			System.out.println(res);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -93,12 +93,12 @@ public class PrologSocket {
 			num = in.readLine().split("\\.");
 	        return Integer.parseInt(num[0]);
 		} catch (Exception e) {
-			System.err.println("error while evaluating");
+			System.err.println("error while evaluating " + e.getMessage());
 			prolog_server.destroyForcibly();
 			Thread.sleep(2000);
 			s = new Socket();
 			connect();
-			throw new Exception("error while evaluating");
+			throw new Exception("error while evaluating " + e.getMessage());
 		}
 	}
 
